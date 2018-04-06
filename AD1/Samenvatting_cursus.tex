@@ -1,0 +1,344 @@
+\title{Samenvatting Algoritmen en Datastructuren}
+\author{
+	{\bf Lesgever:} Prof. dr. Veerle Fack \\
+	{\bf Auteur:} Manu De Buck \\
+	{\bf Laatste bewerking:}
+	}
+
+
+\documentclass[12pt]{report}
+\usepackage{makeidx}
+\usepackage{textcomp}
+\usepackage{titlesec}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{fullpage}
+
+
+\makeindex
+
+\begin{document}
+\maketitle
+
+\chapter{Inleiding}
+
+\section{Algoritmen}
+{\bf Functie:} Koppeling tussen inputs ({\bf het domein}) en outputs ({\bf het bereik}).\\\
+{\bf Parameters:} Waarden waaruit de input bestaat. \\
+\textrightarrow Zelfde input genereert {\bf altijd} zelfde output.\\\
+ {\bf Algoritmisch probleem:} Eindige of oneindige verzameling toegelaten inputwaarden, samen met een specificatie van de gewenste output als functie van de input, noemt met een algoritmisch probleem. Als er ten minste één oplossingsmethode bestaat die voor elke legale input de gewenste output voorbrengt.\\\
+ {\bf Algoritme:} is een methode die wordt gevolgd om een algoritmisch probleem op te lossen.\\\
+ \begin{enumerate}
+ \item Algoritme moet correct zijn
+ \item Bestaat uit concreet aantal stappen. Elke stap uitvoerbaar in eindige hoeveelheid tijd.
+ \item Geen dubbelzinnigheid betreffende de stappen.
+ \item Bestaat uit eindig aantal stappen.
+ \item Het algoritme moet eindigen.
+ \end{enumerate}
+ 
+ \section{Ontwerp en specificatie van algoritmen}
+ {\bf Pseudocode:} Mengeling van natuurlijke taal en constructies uit een programmeertaal.\\
+ \textrightarrow Input, beschrijving output en reeks pseudocodeopdrachten die algoritme weergeven.\\\
+ 
+ \section{Correctheid van algoritmen}
+  {\bf Formele wiskundige bewijstechnieken} om de correctheid van een algoritme aan te tonen.\\\
+  Indien bewijs niet gevonden wordt: beroep doen op  {\bf het uitvoeren van testen}.
+  
+ \subsection{Bewijzen door contradictie}
+  Geven van een tegenvoorbeeld voor de bewering, maar volstaat niet om te bewijzen dat bewering waar is.\\\
+  Wel correct:  {\bf bewijzen door contradictie:} veronderstellen dat bewering niet waar is, daaruit tegenstrijdigheid afleiden.\\\
+  
+  \subsection{Bewijzen door inductie}
+  Bewijzen dat een reeks beweringen X\textsubscript{1}, X\textsubscript{2}, ..., X\textsubscript{n} waar is, door eerst te bewijzen dat X\textsubscript{1} waar is en vervolgens te veronderstellen dat X\textsubscript{i} waar is (inductiehypothese) en te bewijzen dat X\textsubscript{i+1} waar is (inductiestap).\\\
+  Eenvoudige vorm inductie vs. {\bf sterke wiskundige inductie}\\\
+  Uit het ene volgt het volgende vs. We nemen aan dat alles voorafgaand aan X\textsubscript{j} voor j = 1, ..., i waar is.\\\
+  
+  \subsection{Bewijzen met lusvarianten}
+  {\bf Lusvariante:} is eenbewering over variabelen die waar is vooraleer de lus uitgevoerd word en die ook waar is na elke iteratiestap in de lus.\\\
+  
+  \section{Effici\"{e}ntie van algoritmen}
+  
+  \subsection{Analyse van algoritmen}
+  Belang voor het nagaan van complexiteit van algoritme in ruimte en tijd. Een {\bf schatting} maken van de {\bf benodigde geheugenruimte} en de {\bf uitvoeringstijd}.\\\
+  Een algortime is {\bf effici\"{e}nt} als het het gestelde probleem oplost binnen de vooropgestelde beperkingen qua resources. De {\bf kost} van een oplossing is de hoeveelheid resources die de oplossing verbruikt.\\\
+  {\bf complexiteitsanalyse }van de algoritmen laat toe ze {\bf onderling te vergelijken} en afhankelijk daarvan de effici\"{e}ntste te selecteren.\\\
+  Twee doelstellingen bij oplossen probleem:
+  \begin{enumerate}
+  \item Algoritme ontwerpen dat eenvoudig te begrijpen, coderen en debuggen is.
+  \item Algoritme ontwerpen dat de beschikbare resources effici\"{e}nt gebruikt.
+  \end{enumerate}
+  Zie hoofdstuk 2 voor {\bf asymptotische analyse}.
+  
+  \subsection{Snelle schattingen}
+  Maken van een snelle schatting:
+  \begin{enumerate}
+  \item Bepaal de belangrijke factoren die het probleem be\"{i}nvloeden.
+  \item Stel een vergelijking op die de parameters van het probleem met elkaar verbindt.
+  \item Selecteer waarden voor de parameters, en gebruik de bekomen vergelijking om een geschatte oplossing te bekomen.
+  \end{enumerate}
+  
+\section{Datastructuren}
+{\bf Datastructuur:} een voorstelling van gegevens en de bijbehorende bewerkingen op die gegevens. \\\
+Selecteren datastructuur:
+\begin{enumerate}
+\item Analyseer het probleem om te bepalen welke vereisten qua resources elke oplossing moet voldoen.
+\item Bepaal de basisbewerkingen die moeten worden ondersteund, en de vereisten waaraan ze moeten voldoen. Voorbeelden van basisbewerkingen zijn het toevoegen van een element aan de datastructuur, het verwijderen van een element uit de datastructuur en het opzoeken van een gegeven element.
+\item Selecteer de datastructuur die het best aan deze vereisten voldoet.
+\end{enumerate}
+Vereisten op bepaalde sleutelbewerkingen:
+\begin{enumerate}
+\item Worden alle gegevens aan de datastructuur toegevoegd vooraleer de andere bewerkingen (zoals opzoekingen) gebeuren of zijn toevoegingen afgewisseld met andere bewerkingen?
+\item Kunnen elementen verwijderd worden?
+\item Worden de elementen verwerkt in een specifieke volgorde of is willekeurige toegang mogelijk?
+\end{enumerate}
+{\bf Abstract datatype:} Een abstracte specificatie van een datastructuur die de formele beschrijving van een data-object evenals een beschrijving van de bewerkingen die op de structuur kunnen worden uitgevoerd. {\bf (ADT)}.\\\
+Door abstractie te maken van het type van de componenten en meer in het bijzonder dit type als een parameter te behandelen, specificeert men een {\bf generische datastructuur}.
+
+\chapter{Analyse van algoritmen}
+
+\section{Complexiteit van algoritmen}
+
+\subsection{Inleiding}
+{\bf Asymptotische analyse} van het algoritme: meet de effici\"{e}ntie van een algoritme, of zijn implementatie als een computerprogramma wanneer zijn inputgrootte groot wordt. Het is een schattingstechniek, die niets zegt over de relatieve verdiensten van twee programma's waarbij het ene net iets sneller is dan het andere.\\\
+Analyse bestaat typisch uit:
+\begin{enumerate}
+\item Inschatten nodige {\bf uitvoeringstijd}
+\item Inschatten benodigde {\bf geheugenruimte} voor een {\bf datatsructuur}
+\end{enumerate}
+
+\subsection{Theoretisch model}
+{\bf Inputgrootte:} het aantal inputgegevens dat verwerkt wordt.\\\
+De inputgegevens vormen vaak maat  voor de omvang of {\bf complexiteit} van een probleem.\\\
+Uitvoeringstijd van een algoritme is een functie van de grootte van de input.\\\
+Voor {\bf theoretische analyse:} uitvoeringstijd uitdrukken als aantal basisbewerkingen uitgevoerd bij de oplossing van het probleem.\\\
+{\bf Basisbewerking:} zijn uitvoeringstijd is niet afhankelijk van specifieke waarden van operanden.\\\
+\paragraph{Notatie:} voor een inputgrootte {\it n} noteren we de uitvoeringstijd {\it T} van het algoritme als een functie van {\it n} dus als {\it T(n)}. Hierbij veronderstellen we dat {\it T(n)} een niet-negatieve waarde heeft.
+
+\subsection{Functies voor de uitvoeringstijd}
+{\bf Orde van toename} van een functie, is de mate waarin de functie stijgt voor toenemende waarden van {\it n}.\\\
+Voorbeelden:
+\begin{enumerate}
+\item Lineair ({\it n})
+\item {\it n}log{\it n}
+\item Kwadratisch ({\it n\textsuperscript{2}})
+\item Kubisch ({\it n\textsuperscript{3}})
+\item Exponentieel ({\it a\textsuperscript{n},  a \(\in\) ${\rm I\!R}$})
+\end{enumerate}
+
+\subsection{Asymptotische analyse}
+Orde van toename, verwaarloost de constanten en lagere-ordetermen. Dit vereenvoudigt de analyse. 
+\paragraph{Notatie} De {\bf \(\Theta\)-notatie} stelt de orde van toename als functie voor.\\\ 
+{\it Bijvoorbeeld, \( T(n) = 5n + 3\), dan is de uitvoerinstijd \(T(n) = \Theta (n)\).}\\\
+Dit laat toe de relatieve performantie van algoritmen te vergelijken.
+\paragraph{} Dergelijke analyse noemen we {\bf asymptotische analyse van een algoritme}.
+
+\subsection{Gemiddelde, beste en slechtste uitvoeringstijd}
+\paragraph{}Voor een gegeven algoritme kunnen we een onderscheid maken tussen {\it T\textsubscript{g}(n), T\textsubscript{s}(n), T\textsubscript{b}(n)} - respectievelijk de {\bf gemiddelde uitvoeringstijd}, de {\bf slechtst mogelijke uitvoeringstijd} en de {\bf best mogelijke uitvoeringstijd} van het algoritme als functie van de probleemgrootte {\it n}. Vanzelfsprekend geldt er:  {\it  T\textsubscript{b}(n) \(\leq\) T\textsubscript{g}(n) \(\leq\) T\textsubscript{s}(n)}.
+
+\section{Asymptotische notaties}
+
+\subsection{Definities}
+Zijn gedefinieerd om asymptotische gedrag van twee gegeven functies {\it f en g} gedefinieerd op $\mathbb{N}$, waarbij verondersteld wordt dat {\it f en g asymptotische niet-negatieve functies zijn.}
+
+\subsubsection{Bovengranzen en \(O\)-notatie}
+Bovengrens geeft aan wat hoogste orde van toename is dat algoritme kan hebben.\\\
+Merk op: niet hetzelfde als slechtst mogelijke uitvoeringstijd voor een gegeven input van grootte n.\\\
+"Heeft een bovengrens voor zijn orde van toename van {\it f(n)}" : de \(O\)-notatie.\\\
+\paragraph{Definitie 2.2.1.} {\it f(n) = \(O\)(g(n)) indien er constanten c \(\in \) $\mathbb{R}_{>0}^{+}$ en n\textsubscript{0}  \(\in\) $\mathbb{N}$ bestaan, zodanig dat \(0 \leq f(n) \leq cg(n)\) voor alle \(n \geq n\textsubscript{0}\)}
+\paragraph{} Men zegt: {\bf f(n) wordt asymptotisch naar boven toe begrensd door g(n)}.
+
+\subsubsection{Ondergrenzen en \(\Omega\)-notatie}
+\paragraph{}Ondergrens van een algoritme wordt genoteerd door de \(\Omega\)-notatie.
+\paragraph{Definitie 2.2.2.} {\it \(f(n) = \Omega (g(n))\) indien er constanten \(c \in \) $\mathbb{R}_{>0}^{+}$ en n\textsubscript{0} \(\in\) $\mathbb{N}$  bestaan, zodanig dat \(f(n) \geq cg(n) \geq 0\) voor alle \(n \geq \) n\textsubscript{0}}
+\paragraph{} Men zegt dat {\bf asymptotisch naar onder toe begrensd wordt door g}.
+\paragraph{} Merk op:  f(n) = \(O\)(g(n)) a.s.a \(g(n) = \Omega (f(n))\)
+
+\subsubsection{\(\Theta\)-notatie}
+\paragraph{}Als bovengrens en ondergrens gelijk zijn op een constante factor na: uitdrukken door \(\Theta\)-notatie.
+\paragraph{Definitie 2.2.3.}{\it \(f(n) = \Theta (g(n))\) a.s.a \(f(n) = O(g(n))\) en \(f(n) = \Omega (g(n))\), m.a.w. indien er constanten c\textsubscript{1}, c\textsubscript{2} \(\in\) $\mathbb{R}_{>0}^{+}$ en n\textsubscript{0} \(\in\) $\mathbb{N}$ bestaan, zodanig dat \(0 \leq c\)\textsubscript{1}\(g(n) \leq f(n) \leq c\textsubscript{2}g(n)\) voor alle n \(\geq\) n\textsubscript{0}.}
+\paragraph{}Men zegt dat f en g op een positieve constante na, {\bf hetzelfde gedrag op oneindig} vertonen. Merk op dat de volgende symmetrie-eigenschap nu geldig is: \(f(n) = \Theta (g(n))\) a.s.a. \(g(n) = \Theta (f(n))\)
+
+\subsubsection{\(o\)- en \(\omega\)-notatie}
+\paragraph{} voor het specificeren van strikte boven en ondergrenzen op de orde van toename.
+\paragraph{Definitie 2.2.4.} {\it \(f(n) = o(g(n))\) a.s.a. \(f(n) = O(g(n))\) en \(f(n) \neq \Theta (g(n))\).}
+\paragraph{Definitie 2.2.5.}{\it  \(f(n) = \omega(g(n))\) a.s.a. \(f(n) = \Omega (g(n))\) en \(f(n) \neq \Theta (g(n))\).}
+
+\subsection{Werken met asymptotische notaties}
+
+\subsubsection{De limietregel}
+Vergelijken door lim\textsubscript{n \(\to \infty\)} f(n) / g(n) (evt. regel van de l'H\^{o}pital.
+\begin{enumerate}
+\item De limiet is 0: \(f(n) = 0(g(n))\) en \(f(n) \neq \Theta (g(n))\), of dus \(f(n) = o(g(n))\).
+\item De limiet is een constante c \(\neq\) 0: \(f(n) = \Theta (g(n))\).
+\item De limiet is \( + \infty\): \(f(n) = \Omega (g(n))\) en \(f(n) \neq \Theta (g(n))\), of dus \(f(n) = \omega (g(n))\).
+\item De limiet bestaat niet: dan moet een eventueel ordeverband tussen f(n) en g(n) op een andere manier worden bepaald.
+\end{enumerate}
+
+\subsubsection{Vereenvoudigingsregels}
+\begin{enumerate}
+\item Als \(f(n) = \Theta (g(n))\) en \(g(n) = \Theta (h(n))\), dan \(f(n) = \Theta (h(n))\). \\ Als een functie g(n) een maat geeft voor de orde van toename van de kostfunctie f(n), dan geeft elke functie h(n) die een maat geeft voor de orde van toename van g(n) ook een maat voor de orde van toename van f(n).
+\item Als \(f\textsubscript{1}(n) = \Theta (g\textsubscript{1}(n))\) en \(f\textsubscript{2}(n) = \Theta (g\textsubscript{2}(n))\), dan \(f\textsubscript{1}(n) + f\textsubscript{2}(n) = \Theta (max(g\textsubscript{1}(n), g\textsubscript{2}(n)))\). \\ Van twee gedeelten van een algoritme die na elkaar worden uitgevoerd moeten we enkel het duurste gedeelte beschouwen.
+\item Als \(f\textsubscript{1}(n) = \Theta (g\textsubscript{1}(n))\) en \(f\textsubscript{2}(n) = \Theta (g\textsubscript{2}(n))\), dan \(f\textsubscript{1}(n) f\textsubscript{2}(n) = \Theta (g\textsubscript{1}(n) g\textsubscript{2}(n))\). \\ Als een bepaalde actie een aantal keren herhaald wordt en elke herhaling dezelfde kost heeft, dan is de totale kost gegeven door de kost van de actie vermenigvuldigd met het aantal herhalingen. Deze regel is nuttig bij het analyseren van eenvoudige lussen in algoritmen.
+\end{enumerate}
+\paragraph{} Analoge regels zijn geldig voor \(O\)- en \(\Omega\)-notatie
+ 
+\subsection{Asymptotisch gedrag van standaarfuncties}
+\paragraph{Stelling 2.2.6} 
+\begin{enumerate} {\it 
+\item Als T(n) een veelterm in n van graad d is, dan is T(n) = \(\Theta\)\((n^d)\).
+\item \(n^b = o(a^n)\), voor alle re\"{e}le constanten a en b, met a \(>\) 1.
+\item \((log_{c}n)^b = o(n^a)\), voor alle re\"{e}le constanten a, b, c met a, c \(>\) 0.
+}
+\end{enumerate}
+\paragraph{}Verwisselen tussen basissen van logaritmen gaat met behulp van volgende formule: \(log_{a}x = \frac{log_{c}x}{log_{c}a}\), met c \(>\) 0.
+\paragraph{Stelling 2.2.7} {\it De Fibonacci-getallen, gedefinieerd als \(F_0 = 0, F_1 = 1, F_n = F_{n-1} + F_{n-1}\) voor n \(>\) 1, vormen een exponentieel stijgende functie.}\\ \newline
+{\it Bewijs.} De volgende eigenschap geldt voor de Fibonacci-getallen \(F_i = (\phi ^i - \phi_-^i) /\sqrt{5}\), met \(\phi = (1 + \sqrt{5})/2 = 1.61...\) en \(\phi_- = (1 - \sqrt{5})/2 = - 0.61...\). Aangezien \(|\phi_-| < 1\), geldt dat \(|  \phi_-^i | /\sqrt{5} < 1/2 \), zodat geldt dat \( F_i = round(\phi^i / \sqrt{5})\). 
+\paragraph{Stelling 2.2.8} {\it De faculteitsfunctie is snelstijgend, met volgende eigenschappen:\\
+\begin{enumerate}
+\item n! = \(o(n^n)\),
+\item n! = \(\omega (2^n)\),
+\item \(log_2(n!) = \Theta(nlogn)\).
+\end{enumerate}
+Bewijs.}
+We bewijzen enkel eigenschap 3. Daartoe bewijzen we eerst een bovengrens:\\\
+\begin{equation}
+\begin{split}
+log_2(n!) & = log_2n + log_2(n-1) + ... + log_21\\
+ & =  \leq log_2n + log_2n + ... + log_2n\\
+ & = nlog_2n
+\end{split}
+\end{equation}
+Hieruit volgt dat \(log_2(n!) = O(nlogn)\). Vervolgens bewijzen we een ondergrens:
+\begin{equation}
+\begin{split}
+log_2(n!) & = log_én + log_2(n-1) + ... + log_21 \\
+& \geq log_2n + log_2(n-1) + ... + log_2( \lceil n/2 \rceil)\\
+& \geq log_2(\lceil n/2 \rceil ) + log_2(\lceil n/2 \rceil ) + ... + log_2(\lceil n/2 \rceil )\\
+& = \lceil (n + 1)/2 \rceil * log_2(\lceil n/2 \rceil ) \\
+& \geq (n/2) log_2(n/2)\\
+& = (n/2) log_2( n - n/2)\\
+& \geq (nlog_2n)/4,  n \geq 4
+\end{split}
+\end{equation}
+Hieruit volgt dat \(log_2(n!) = \Omega(nlogn)\). Dus hebben we bewezen dat \(log_2(n!) = \Theta (nlogn)\)
+
+\section{Bepalen van tijds- en geheugencomplexiteit}
+\subsection{Het tijd/ruimte-tradeoff-principe}
+\paragraph{}Dit principe zegt ons dat in vele gevallen een reductie in uitvoeringstijd allen kan worden bekomen als men bereid is om geheugenruimte op te offeren, en vice versa.
+ 
+ \section{Praktische beschouwingen}
+ 
+ \section{Geamortiseerde complexiteitsanalyse}
+\paragraph{}Beschouwt de kost van een ganse sequentie van m bewerkingen , en kent aan iedere individuele bewerking een gedeelte van de totale kost toe. Men noemt dit de {\bf geamortiseerde kost} van de bewerking. Indien we voor een bewerking kunnen aantonen dat het slechtste geval niet herhaaldelijk kan voorkomen, kunnen we een betere begrenzing voor de totale tijd bekomen en kunnen we de bewerkingen beschouwen alsof ze uitgemiddelde begrenzing van deze totale begrenzing heeft. We noemen dit een {\bf geamortiseerde tijdsbegrenzing}.
+
+\section{Handelbare en onhandelbare problemen}
+\paragraph{Handelbaar} Een computationeel probleem wordt handelbaar genoemd als er een polynomiaal\footnote{ Als de benodigde tijd, als functie van n, begrensd wordt door een polynoom} algoritme bestaat om het probleem op te lossen; de betekenis hiervan is dat er dan een effici\"ent algoritme voor het probleem bestaat.
+\paragraph{Onhandelbaar} Een computationeel probleem wordt onhandelbaar genoemd als kan worden bewezen dat er geen polynomiaal algoritme is om het probleem op te lossen.
+\paragraph{NP-complete} De meeste van deze onhandelbare problemen behoren tot de klasse van NP-complete problemen. (De klasse NPC). Hiervan is wel reeds bewezen dat, als er voor één van de problemen uit de klasse NPC een polynomiaal algoritme bestaat, er dan ook voor alle andere problemen uit de klasse NPC een polynomiaal algoritme bestaat.
+\paragraph{Beslissingsprobleem} Een beslissingsprobleem is een probleem dat enkel een antwoord "ja" of "nee" vereist, afhankelijk van het feit of de input een bepaalde eigenschap heeft. Zo'n probleem behoort tot de {\bf klasse} P als er een polynomiaal algoritme bestaat om het probleem op te lossen. Anders behoort het tot de {\bf klasse NP\footnote{Niet-deterministisch polynomiaal.}} als er een manier is om de correctheid van een "ja"-antwoord in polynomiale tijd te verifi\"eren.
+\paragraph{Polynomiaal herleidbaar} Een beslissingsprobleem R is polynomiaal herleidbaar tot Q als er een transformatie in polynomiale tijd bestaat van elke instantie \(I_R\) van probleem R naar een instantie \(I_Q\) van probleem Q, zodanig dat de instanties \(I_R\) en \(I_Q\) hetzelfde antwoord ("ja" of "nee") hebben.
+\paragraph{NP-moeilijk} Een beslissingsprobleem is NP-moeilijk als elk probleem in de klasse NP polynomiaal herleidbaar is tot R.
+\paragraph{NP-compleet} Een NP-moeilijk beslissingsprobleem R is NP-compleet als R tot de klasse NP behoort. De klasse van NP-complete problemen wordt ook de klasse NPC genoemd.
+
+\chapter{Gebruik van stapels en (prioriteitswachtlijnen)}
+
+\section{Stapels en compilers}
+\paragraph{Stapel} Een stapel is een collectie-datatsructuur waarbij geldt dat het element dat het laatst werd toegevoegd, het eerst weer wordt opgehaald. Dit principe wordt ook wel LIFO (Last In First Out) genoemd.
+
+\section{Simulatie en prioriteitswachtlijnen}
+\paragraph{Prioriteitswachtlijnen} Op bepaalde punten moet de volgende gebeurtenis in een collectie van gebeurtenissen worden bepaald, of een gebeurtenis op de juiste manier aan de collectie worden toegevoegd zodat deze op het juiste moment als volgende gebeurtenis aanzien kan worden. Hiervoor gebruikten we een prioriteitswachtlijn.
+\paragraph{Discrete tijdsgestuurde simulatie} Dit is een simulatie waarbij bij het begin van de simulatie de simulatieklok op nul gezet wordt, en vervolgens wordt de klik telkens \'e\'en tik vooruit gezet en gecontroleerd of een gebeurtenis optreedt of niet.
+\paragraph{Gebeurtenisgestuurde simulatie} Dit is een simulatie waarbij de simulatieklok telkens vooruit geplaatst wordt naar de volgende gebeurtenis. Dit is conceptueel makkelijker te verwezenlijken.
+
+\chapter{Recursie}
+
+\section{Ontwerp van recursieve algoritmen}
+\paragraph{Recursief} Een algoritme is recursief als het zichzelf oproept om een gedeelte van het werk uit te voeren. Opdat dit succesvol zou zijn, moet de oproep naar zichzelf een kleiner probleem dan het oorspronkelijke probleem betreffen.
+\paragraph{Complexiteitsanalyse} Dit verloopt vaak moeilijker, aangezien deze dikwijls beschreven worden door een {\bf recurrente betrekking} die moet worden opgelost.
+
+\section{Analyse van recursieve algoritmen}
+\paragraph{Recurrente betrekking} De uitvoeringstijd wordt doorgaans beschreven door een recurrente betrekking die moet worden opgelost. We beperken ons tot het bepalen van asymptotische \(\Theta\)- of \(O\)-grenzen voor de oplossing.
+
+\subsection{Iteratiemethode}
+\paragraph{} De betrekking wordt iteratief volledig uitgewerkt tot een sommatie waarin enkel n en de initiële waarden optreden.
+
+\subsection{Substitutiemethode}
+\paragraph{} Oplossing voor recurrente betrekking wordt vooropgesteld, en vervolgens wordt m.b.v. wiskundige inductie bewezen dat deze oplossing werkt.
+
+\subsection{Recursiebomen}
+\paragraph{Recursieboom} dit is een handig hulpmiddel om te visualiseren wat er precies gebeurt bij het uitwerken van een iteratie voor een recurrente betrekking.
+
+\subsection{Master-methode}
+\paragraph{} Deze methode geeft een recept voor het oplossen van recurrente betrekkingen van ed vorm \(T(n) = aT(n/b) + f(n)\).
+\paragraph{Stelling 5.2.1, master-stelling} {\it Zij \(a \geq 1\) en \(b > 1\) constanten, zij f(n) een asymptotische positieve functie, en zij \(T(n)\) gedefinieerd door de recurrente betrekking \(T(n) = aT(n/b) + f(n)\)}.
+\begin{enumerate}
+\item Als f(n) = \(O(n^{log_ba-\varepsilon})\) voor zekere constante \(\varepsilon > 0\), dan is \(T(n) = \Theta (n^{log_ba})\).
+\item Als f(n) = \(\Theta (n^{log_ba})\), dan is \(T(n) = \Theta(n^{log_ba}logn)\).
+\item Als f(n) = \(\Omega (n^{log_ba+\varepsilon})\) voor zekere constante  \(\varepsilon > 0\), en als \(af(n/b) \leq cf(n)\) voor zekere constante \(c < 1\) en voldoende grote n (d.i. regulariteitsvoowaarde), dan is \(T(n) = \Theta(f(n))\)
+\end{enumerate}
+
+\section{Wanneer recursie af te raden is}
+
+\subsection{Staartrecursie}
+\paragraph{Staartrecursie} Over het algemeen geldt dat recursie wordt afgeraden (wegens overhead) als het kan vervangen worden door een simpele lus. We noemen dit staartrecursie (De recursieve versie).
+
+\chapter{Verdeel-en-heers-algoritmen}
+
+\section{Ontwerpstrategie\"en voor algoritmen}
+\subsubsection{Brute kracht (brute force)}
+\paragraph{De brute-kracht-methode} lost een probleem op door alle mogelijkheden uit te proberen. Zeer ineffici\"ent.
+
+\subsubsection{Tijd/ruimte-tradeoffs}
+\paragraph{} Gebruiken van extra geheugenruimte om uitvoeringstijd te reduceren. Een voorbeeld hiervan is de frequentietabel.
+
+\subsubsection{Verdeel-en-heers (Divide-and-conquer)}
+\paragraph{} Algoritmen volgens deze strategie bestaan uit twee gedeelten:
+\begin{enumerate}
+\item {\bf Verdeel-fase}, oorspronkelijke probleem wordt opgesplitst in kleinere deelproblemen die recursief worden opgelost.
+\item {\bf Heers-fase}, waarbij oplossing voor het oorspronkelijke probleem wordt geconstrueerd uit de oplossingen van de deelproblemen.
+\end{enumerate}
+\paragraph{}De bekomen deelproblemen moeten disjunct zijn opdat deze methode effici\"ent zouden zijn.
+
+\subsubsection{Verminder-en-heers (Decrease-and-conquer)}
+\paragraph{Variant op verdeel-en-heers,} genaamd verminder-en-heers, hierbij wordt de oplossing van een probleem bepaald door slechts \'e\'en gelijkaardig deelprobleem. Dikwijls hebben we hierbij te maken met een geval van staartrecursie. Er zijn hierop drie mogelijke variaties:
+\begin{enumerate}
+\item {\bf Verminder met een constante}. De probleemgrootte wordt in elke stap verminderd met constante waarde.
+\item {\bf Verminder met een constante factor}. Probleemgrootte wordt in elke stap gedeeld door een constante factor, typisch 2.
+\item {\bf Verminder met een variabele grootte}. Probleemgrootte in elke stap verkleinen met of gedeeld door een waarde die kan vari\"eren in de verschillende stappen.
+\end{enumerate}
+
+\subsubsection{Transformeer-en-heers (Transform-and-conquer)}
+\paragraph{} Transformeren van oorspronkelijk probleem naar een ander probleem. Drie variaties van de techniek:
+\begin{enumerate}
+\item {\bf Vereenvoudiging van het probleem}. Het probleem wordt getransformeerd naar een eenvoudiger of meer geschikte variant van hetzelfde probleem. Bijvoorbeeld: input probleem vooraf sorteren.
+\item {\bf Verandering van voorstelling}. Veranderen naar een andere representatie van het probleem.
+\item {\bf Reductie van het probleem}. Het probleem wordt getransformeerd naar een ander probleem waarvoor reeds een algoritme gekend is. Bijvoorbeeld: de klassieke problemen uit de grafentheorie.
+\end{enumerate}
+
+\section{Zoeken in rijen}
+\paragraph{} In een gesorteerde rij kan sneller gezocht worden met behulp van de {\bf binaire zoekmethode.}
+
+\subsection{Het sequenti\"ele zoekalgoritme}
+\paragraph{}Eenvoudige oplossing overloopt een voor een de objecten en vergelijkt ze met het gezochte element. Dit wordt herhaald totdat het element gevonden is, of totdat de gehele rij overlopen is.
+\paragraph{Sentinel of 'schildwacht'} Dit voorkomt de nood aan twee te controleren condities bij een lus over een rij. Het gezochte element wordt achteraan de lijst toegevoegd zodat het element zeker gevonden wordt.
+\paragraph{}Bij een gesorteerde rij kunnen hieraan enkele verbeteringen worden aangebracht. Het kan bijvoorbeeld worden stopgezet wanneer een element bereikt is dat groter is dan het te zoeken element.
+\paragraph{}Bij het sequenti\"ele zoeken is de slechtste uitvoeringstijd \(\Theta(n)\)
+
+\subsection{De binaire zoekmethode}
+\paragraph{}We kunnen een willekeurig element nemen uit een gesorteerde rij. Dit element vergelijken we met het gezochte element. Afhankelijk hiervan is het element gevonden, of moeten we links/rechts van het willekeurige element gaan zoeken vanwege het gesorteerd zijn van de rij. Als willekeurig element neemt men meestal het element dat in het midden van de rij staat, namelijk het element \(k = \lfloor (i + j)/2 \rfloor \).
+\paragraph{Stelling 6.2.1} {\it De binaire zoekmethode heeft uitvoeringstijd \(T(n) = \Theta (logn) in het slechtste geval\)}
+\paragraph{Bewijs.} De recurrente betrekking voor de uitvoeringstijd wordt gegeven door \(T(n) = T(n/2) + \Theta(1)\). Steunend op de masterstelling, is de oplossing hier van \(T(n) = \Theta(logn)\). De binaire zoekmethode is dus een logaritmisch algoritme.
+
+\section{Het probleem van de maximale deelrijsom}
+ \paragraph{Eigenschap 6.3.1.} {\it Voor willekeurige \( i \geq 0\), als \(a_i, ..., a_j\) de eerste deelrij is waarvoor de som negatief wordt, dan is voor elke \(i \leq p \leq j\) en elke \(q \geq p\), de deelrij \(a_p, ..., a_q\) ofwel geen maximale deelrij, ofwel een reeds geziene maximale deelrij.}
+ \paragraph{Bewijs.} Voor p = i volgt het gestelde onmiddelijk uit bovenstaande observatie. Voor \(p > i\) is de beschouwde deelrij ofwel van de vorm \(a_i, ..., a_p, ..., a_j, ..., a_q\) ofwel van de vorm \(a_i, ..., a_p, ..., a_q, ..., a_j\). Aangezien j de eerste index is waarvoor de som negatief wordt, is de som van \(a_i, ..., a_{p-1}\) positief en is dus de som van \(a_p, ..., a_q\) kleiner dan of gelijk aan de som van \(a_i, ..., a_q\). In het eerste geval, als \(j < q\), weten we reeds dat de deelrij \(a_i, ..., a_q\) geen maximale deelrij is. Anders is  \(a_i, ..., a_q\) een reeds geziene deelrij met een grotere som.
+ \paragraph{On-line algoritmen} Als de rij slechts eenmalig wordt doorlopen, het volstaat element per element te lezen, zonder de gegevens in het centrale geheugen in te lezen. Het heeft ook op elk moment de maximale deelrijsom van het reeds gelezen gedeelte van de inputrij.
+ 
+ \section{Het probleem van het dichtste puntenpaar}
+
+
+\chapter{Sorteeralgoritmen}
+
+\paragraph{}
+\end{document}
