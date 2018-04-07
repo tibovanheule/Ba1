@@ -337,8 +337,61 @@ Hieruit volgt dat \(log_2(n!) = \Omega(nlogn)\). Dus hebben we bewezen dat \(log
  
  \section{Het probleem van het dichtste puntenpaar}
 
-
 \chapter{Sorteeralgoritmen}
+\section{Kwadratische sorteeralgoritmen}
+
+\subsection{Sorteren door omwisseling {\bf BubbleSort}}
+\paragraph{BubbleSort} Naast elkaar staande elementen worden vergeleken en verwisseld als ze niet in de goede volgorde staan. Het grootste element van de twee wordt naar achteren verschoven. Dit proces wordt herhaaldelijk uitgevoerd, tot n - 1 (telkens - 1, aangezien het laatste element van elke volledige iteratie op zijn juiste plaats staat). Dit wordt herhaald tot het voorlaatste element, want na n-1 fasen is de rij uiteindelijk gesorteerd.
+\paragraph{Stelling 7.1.1} {\it BubbleSort heeft tijdscomplexiteit \(T(n) = \Theta(n^2)\)}
+\paragraph{Bewijs} De probleemgrootte \(n\) is de dimensie van de rij. De essenti\"ele bewerkingen zijn vergelijkingen tussen rij-elementen en verwisselingen van rij-elementen. Het aantal vergelijkingen \(C(n)\) in het BubbleSort is hetzelfde voor alle mogelijke rijen van lengte n, namenlijk: \(C(n) = n(n-1)/2\). Het aantal verwisselingen \(S(n)\) is afhankelijk van de inputrij, en kan vari\"eren van \(S_b(n) = 0\) in het beste geval tot \(S_s(n) = n(n-1)/2\) in het slechtste geval. De totale complexiteit is dus \(T(n) = \Theta(n^2)\)
+
+\subsection{Sorteren door selectie {\bf SelectionSort}}
+\paragraph{SelectionSort} Is een rechtlijnig algoritme. Het grootste element inde rij wordt bepaald en achteraan geplaatst. Vervolgens wordt het tweede-grootste element bepaald en op de voorlaatste plaats gezet. Dit wordt herhaald op steeds kortere deelrijen, totdat de deelrij uiteindelijk maar \"e\"en element meer bevat.
+\paragraph{Stelling 7.1.2}{\it SelectionSort heeft tijdscomplexiteit \(T(n) = \Theta(n^2)\)}
+\paragraph{Bewijs} Het aantal vergelijkingen is \(C(n) = n(n-1)/2\), want in elke stap van de dubbele for-lus gebeurt een vergelijking. Het aantal verwisselingen is hoogstens \(S_s(n) = n-1\), hetgeen onmiddelijk duidelijk is uit de implementatie: de verwisseloperatie staat in de buitenste lus en kus hoogstens n-1 keer worden uitgevoerd. Het kan gebeuren dat er geen enkele verwisseling nodig is, nl. als de gegeven rij al gesorteerd is, m.a.w. \(S_b(n) = 0\). De totale tijdscomplexiteit is dus \(T(n) = \Theta(n^2)\)
+
+\subsection{Sorteren door tussenvoegen {\bf InsertionSort}}
+\paragraph{InsertionSort}In de begintoestand is het eerste element op zichzelf beschouwd, gesorteerd. In de eindtoestand zijn alle elementen, als groep beschouwd, gesorteerd. De basisbewerking van het algoritme is het rangschikken van de elementen op de posities 1 t.e.m. i, waarbij i een waarde tussen 2 en n heeft. Daarbij wordt verondersteld dat de elementen op posities 1 t.e.m. i-1 reeds gesorteerd zijn en wordt het element op positie i op de juiste plaats tussengevoegd. Het algoritme bestaat uit een aantal fasen waarbij i achtereenvolgens waarden van 2 t.e.m. n aanneemt.
+\paragraph{Stelling 7.1.3}{\it InsertionSort heeft een slechtste-geval-uitvoeringstijd \(T_s(n) = \Theta(n^2)\) en een beste-geval-uitvoeringstijd van \(T_b(n) = \Theta(n)\).}
+\paragraph{Bewijs}In het slechtste geval is het aantal stappen uitgevoerd door de dubbele for-lus gegeven door \(n(n-1)/2\). Elke stap komt overeen met een vergelijking en een verwisseling dus de uitvoeringstijd in het slechtste geval is \(\Theta(n^2)\).
+Als echter de rij bij het begin van het algoritme reeds gesorteerd is, dan is de uitvoeringstijd \(\Theta(n)\), omdat de test bij het begin van de binnenste for-lus altijd faalt en de lus dus niet uitgevoerd wordt. Dit is ook het best mogelijke geval, want de buitenste lus heeft steeds n-1 stappen.
+
+\subsubsection{Gemiddelde uitvoeringstijd}
+\paragraph{Inversie}Een inversie van een rij \((a_1, ..., a_n)\) is elk paar \((i, j)\) waarvoor geldt dat \(i < j\) maar \(a_i > a_j\). {\it Het verwisselen van twee adjacente elementen die niet in de goede volgorde staan, vermindert het aantal inversies met precies \"e\"en. Een gesorteerde rij heeft geen inversies.}
+\paragraph{Gemiddelde uitvoeringstijd} Om deze te berekenen gaan we uit van volgende veronderstellingen:
+\begin{enumerate}
+\item De rij bevat geen dubbels.
+\item De rij beschouwen we als een permutatie van de eerste n natuurlijke getallen. We veronderstellen dat alle permutaties even waarschijnlijk zijn.
+\end{enumerate}
+\paragraph{Stelling 7.1.4}{\it Het gemiddelde aantal inversies in een rij van n verschillende getallen is gegeven door \(n(n-1)/4\)}
+\paragraph{Bewijs}Voor een rij A noemen we \(A_r\) de rij in omgekeerde volgorde. Beschouw twee willekeurige getallen \((x,y)\) in de rij waarvoor \(y > x\). Dit paar correspondeert met een inversie in ofwel \(A\) ofwel \(A_r\). Het totale aantal dergelijke paren voor een rij \(A\) (en zijn omgekeerde \(A_r\)) is gegeven door \(n(n-1)/2\). Het aantal inversies in een gemiddelde rij is dus de helft hiervan, of \(n(n-1)/4\).
+\paragraph{Stelling 7.1.5}{\it InsertionSort heeft gemiddelde uitvoeringstijd \(T_gg(n) = \Theta(n^2)\)}.
+\paragraph{Bewijs}Merk op dat het aantal inversies in de te sorteren rij precies gelijk is aan het aantal keer dat in het algoritme de opdracht voor het verwisselen van \(a_j\) en \(a_j-1\) uitgevoerd wordt. \\ \\
+Dus, als er k inversies zijn bij de start van het algoritme, dan moeten er k (impliciete) verwisselingen gebeuren. Aangezien er verder \(\Theta(n)\) ander werk nodig is in het algoritme, is de uitvoeringstijd van het sorteren door tussenvoegen gegeven door \(\Theta(k + n)\), met k het aantal inversies in de oorspronkelijke rij.\\ \\
+Zoals in voorgaande stelling bewezen is het gemiddelde aantal inversies \(\Theta(n^2)\), waaruit onmiddelijk volgt dat sorteren door tussenvoegen kwadratisch is in het gemiddelde geval.
+
+\subsubsection{Een ondergrens voor de uitvoeringstijd}
+\paragraph{Bottleneck}Bij deze algoritmen is het feit dat dit algoritme slechts aangrenzende elementen met elkaar vergelijkt en/of verwisselt de bottleneck.
+\paragraph{Stelling 7.1.6}{\it Om het even welk algoritme dat sorteert door het vergelijken en verwisselen van aangrenzende elementen, vereist gemiddeld \(\Omega(n^2) uitvoeringstijd\).}
+\paragraph{Bewijs}Het gemiddelde aantal inversies bij het begin van het algoritme is \(n(n-1)/4\). Elke verwisseling vermindert het aantal inversies met precies \"e\"en, zodat dus \(\Omega(n^2)\) verwisselingen vereist zijn.
+
+\section{MergeSort}
+\paragraph{MergeSort} gebruikt recursie om te komen tot een effici\"ent sorteeralgoritme. De te sorteren rij wordt opgesplitst in twee deelrijen die half zo lang zijn als de oorspronkelijke rij. Meer plrecies, als n de lengte van de oorspronkelijke rij voorstelt, dan hebben de deelrijen resp. lengte \(\lfloor n/2 \rfloor\) en \(\lceil n/2 \rceil\). Deze twee deelrijen worden recursief gesorteerd en vervolgens samengevoegd tot \"e\"en enkele gesorteerde rij. Het samenvoegen van twee gesorteerde rijen wordt ook {\bf merge} genoemd, vandaar de naam.
+\paragraph{Stelling 7.2.1}{\it MergeSort heeft tijdscomplexiteit \(T(n) = \Theta(nlogn)\)}.
+\paragraph{Bewijs}MergeSort is een verdeel-en-heers algoritme, waarvan de uitvoeringstijd bepaald wordt door de recurrente betrekking \(T(n) = 2T(n/2) + \Theta(n)\). De oplossing hiervan is \(T(n) = \Theta(nlogn)\). Dit is zowel slechtste- als beste- en gemiddelde-geval-uitvoeringstijd, omdat het mergen altijd lineaire tijd kost.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \paragraph{}
 \end{document}
