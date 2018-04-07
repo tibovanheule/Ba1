@@ -1,8 +1,9 @@
 \title{Samenvatting Algoritmen en Datastructuren}
 \author{
 	{\bf Lesgever:} Prof. dr. Veerle Fack \\
-	{\bf Auteur:} Manu De Buck \\
-	{\bf Laatste bewerking:}
+	{\bf Auteur(s):} Manu De Buck \\
+	{\bf Laatste bewerking:} \\
+	{\bf Bibliografie:} Algoritmen en Datastructuren, Veerle Fack, acco
 	}
 
 
@@ -380,9 +381,44 @@ Zoals in voorgaande stelling bewezen is het gemiddelde aantal inversies \(\Theta
 \paragraph{Stelling 7.2.1}{\it MergeSort heeft tijdscomplexiteit \(T(n) = \Theta(nlogn)\)}.
 \paragraph{Bewijs}MergeSort is een verdeel-en-heers algoritme, waarvan de uitvoeringstijd bepaald wordt door de recurrente betrekking \(T(n) = 2T(n/2) + \Theta(n)\). De oplossing hiervan is \(T(n) = \Theta(nlogn)\). Dit is zowel slechtste- als beste- en gemiddelde-geval-uitvoeringstijd, omdat het mergen altijd lineaire tijd kost.
 
+\section{QuickSort}
+\paragraph{QuickSort}Doorgaans is dit de beste keuze voor een intern sorteeralgoritme. Dit is een zeer snel sorteeralgoritme. De gemiddelde uitvoeringstijd is \(\Theta(nlogn)\) en de slechtst mogelijke uitvoeringstijd is \(\Theta(n^2)\), maar de kans dat dit slechtste geval zich voordoet kan zeer klein worden gemaakt.
 
+\subsection{Het QuickSort-algoritme}
+\paragraph{Partitioneren}Het partitioneert de te sorteren rij. Een willekeurig element s uit de rij wordt gekozen; dit element wordt de spil genoemd. Vervolgens wordt de rij opgesplitst in twee disjuncte deelrijen, nl. een deelrij L met elementen kleiner dan de spil en een deelrij R met elementen groter dan de spil. Deze twee deelrijen worden dan recursief gesorteerd, en aaneengeschakeld tot de uiteindelijke gesorteerde rij.
+\paragraph{Stelling 7.3.1}{\it QuickSort sorteert de gegeven rij op correcte wijze.}
+\paragraph{Bewijs}Daartoe steunen we op de volgende vaststellingen. Het principe van recursie garandeert dat de groep L van de kleine elementen en de groep R van de grote elementen na de recursieve oproepen gesorteerd zijn. De kenmerkende eigenschap van de partitionering garandeert dat het grootste element van L niet groter is dan de spil en dat het kleinste element van R niet kleiner is dan de spil. hieruit kunnen we besluiten dat de uiteindelijk gevormde rij correct gesorteerd is.
 
+\subsection{Complexiteit van QuickSort}
+\paragraph{Best mogelijke partitionering}Het best mogelijke geval voor QuickSort treedt op wanneer de spil de rij elementen opsplitst in twee deelrijen van gelijke grootte, en dat bij elke stap in de recursie. In dat geval: twee recursieve oproepen van halve probleemgrootte met lineaire overhead, hetgeen analoog is aan de situatie bij MergeSort, met als recurrente betrekking \(T(n) = 2T(n/2) + \Theta(n)\). De best mogelijke uitvoeringstijd van QuickSort is dus:\\
+\(T_b(n) = \theta(nlogn)\).
+\paragraph{Slechtst mogelijke partitionering}Deelproblemen van ongelijke grootte zijn ongunstig. Veronderstel: spil in elke stap het kleinste element van de deelrij, dan is de groep L van kleine elementen leeg terwijl de groep R van grote elementen de ganse deelrij behalve de spil bevat. De recurrente betrekking die de uitvoeringstijd in dit geval beschrijft, is \(T(n) = T(n-1) + \Theta(n)\). Gebruik maken van de iteratiemethode kunnen we hieruit afleiden dat de slechtst mogelijke uitvoeringstijd van QuickSort kwadratisch is:\\
+\(T_s(n) = \theta(n^2)\).
+\paragraph{Gebalanceerde partitionering en het gemiddelde geval} In het gemiddelde geval is de uitvoeringstijd \(\Theta(n log n)\).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 
+\subsection{Keuze van de spil}
+\paragraph{Aandachtspunt} Het vermijden van de slechtste uitvoeringstijd \(\Theta(n^2)\). Eerste of laatste element uit rij als spil wordt afgeraden, aangezien bij gesorteerde of omgekeerd gesorteerde rijen dit voor problemen zorgt. Het middelste element is een betere keuze, aangezien bij een gesorteerde rij, hier twee perfecte partities gevormd kunnen worden. Desondanks kan een kwadratische uitvoeringstijd nog steeds voorkomen, maar de kans om die te bekomen is zeer klein.
+\paragraph{Mediaan-van-drie-partitionering}Deze methode probeert een beter dan gemiddeld goede spil te kiezen met behulp van de mediaan\footnote{De mediaan van een groep van n getallen is het \(\lceil n/2 \rceil\)-de kleinste getal.}. De beste keuze van de spil zou dus uiteraard de mediaan zijn, maar het berekenen van deze mediaan kost ook tijd en dit zou het algoritme te veel vertragen. We kunnen dit oplossen door de mediaan van een deelgroep te bepalen. In de praktijk gebruikt men doorgaans volgende drie elementen: het eerste element, het laatste element en het middelste element uit de rij.
+
+\subsection{Het partitioneren van de rij}
+\paragraph{Basispartitionering}Deze bestaat uit drie stappen. In de eerste stap wordt het spilelement achteraan geplaatst door het te verwisselen met het laatste element. (We veronderstellen voorlopig dat alle elementen verschillend zijn.) In de tweede stap worden alle elementen kleiner dan de spil naar het linkergedeelte van de rij gebracht, terwijl alle elementen groter dan de spil naar het rechtergedeelte worden gebracht. Dit gebeurt door van links naar rechts naar een element groter dan de spil te zoeken, via een huidige positie links die start bij het begin. Analoog zoeken we van rechts naar links naar een element kleiner dan de spil, via een huidige positie rechts. Deze twee elementen worden van plaats verwisseld. Dit wordt herhaalt tot wanneer de twee huidige posities links en rechts mekaar passeren in de rij. De derde stap bestaat uit het verwisselen van de spil met het eerste element groter dan de spil.
+\paragraph{Bij sleutels gelijk aan de spil?} Beide links en rechts moeten stoppen wanneer een sleutel gelijk aan de spil ontmoet wordt. 
+\paragraph{Mediaal-van-drie-partitionering}Het is het eenvoudigste manier om het eerste het middelste en laatste element te sorteren. Merk op: eerste element is \(\leq\) spil en laatste element is \(\geq\) spil, waardoor we de spil naar het voorlaatste element kunnen verplaatsen en links kan starten bij het tweede element en rechts bij het derde laatste element van de deelrij.
+
+\section{Lineaire sorteeralgoritmen}
+
+\subsection{CountingSort}
+\paragraph{CountingSort} Dit algoritme kan worden gebruikt voor het sorteren van een rij \((a_1, ..., a_n)\), waarbij de sleutels \(a_i\) gehele getallen zijn uit het interval \([0,k]\), voor een niet te grote waarde van k. Om de rij te sorteren telt het algoritme hoeveel keer elke waarde voorkomt; uit deze informatie kan de positie van elke sleutel in de gesorteerde rij worden berekend en kan de rij worden gesorteerd. Dit is een stabiel\footnote{Een sorteeralgoritme wordt stabiel genoemd als elementen die dezelfde sleutel hebben (de sleutel is dat kenmerk van een element dat wordt vergeleken met de sleutel van een ander element om de volgorde te bepalen) niet bij het sorteren ten opzichte van elkaar van volgorde veranderen. {\it Bron: Wikipedia}} sorteeralgoritme.
+\paragraph{Stelling 7.4.1}{\it De uitvoeringstijd van CountingSort is \(T(n) = \Theta(n)\) als \(k = O(n)\).}
+\paragraph{Bewijs}Elke lus in het algoritme is ofwel \(\Theta(n)\) ofwel \(\Theta(k)\). De uitvoeringstijd van het algoritme is dus \(T(n) = \Theta(n + k)\). Wanneer \(k \leq n\), of meer algemeen, wanneer k een functie van n is waarvoor \(k = O(n)\), dan wordt k verwaarloosbaar tegenover n en krijgen we dus een lineaire uitvoeringstijd \(T(n) = \Theta(n)\) voor het algoritme.
+
+\subsection{RadixSort}
+\paragraph{RadixSort}Dit is een algoritme dat kan worden gebruikt voor het sorteren van een rij  \((a_1, ..., a_n)\) van positieve gehele getallen, die een beperkt aantal cijfers hebben.Om deze rij te sorteren wordt eerst een stabiel sorteeralgoritme gebruikt om de getallen te sorteren op hun laatste cijfer, vervolgens op hun voorlaatste cijfer, enzovoort, tot uiteindelijk gesorteerd wordt op het eerste cijfer.
+\paragraph{Stelling 7.4.2}{\it RadixSort sorteert de gegeven rij op correcte manier.}
+\paragraph{Bewijs} Zij m het aantal cijfers in de getallen. Zij x een sleutel uit de te sorteren rij. We bewijzen dat, wanneer het algoritme stopt, elke sleutel met waarde groter dan x in de rij na x komt, waaruit volgt dat de rij gesorteerd is. \\
+Beschouw de decimale voorstelling van  \(x = x_{m-1}10^{m-1} + ... + 10x_1 + x_0\) en van een element \(y = y_{m-1}10^{m-1} + ... + 10y_1 + y_0\) uit de rij, en onderstel dat \(y > x\). Zij \(l\) de grootste index waarvoor \(x_l \neq y_l\). Aangezien \(y > x\) is dus \(y_l > x_l\). Wanneer CountingSort sorteert met het cijfer corresponderend met \(10^l\) als sleutel, wordt y dus achter x geplaatst. Bij volgende uitvoeringen van CountingSort is telkens \(x_i = y_i\) \((i > l)\) en aangezien CountingSort stabiel is, blijft y in de rij achter x geplaatst.
+\paragraph{Stelling 7.4.3}{\it De uitvoeringstijd van RadixSort is \(T(n) = \Theta(n)\), wanneer het aantal cijfers m begrensd is door een constante.}
+\paragraph{Bewijs}De uitvoeringstijd van het sorteren in elke stap van de for-lus is \(\Theta(n + 9)\), dus \(\Theta(n)\). Aangezien de for-lus m stappen heeft, is de totale complexiteit dus \(T(n) = \Theta(mn)\). Wanneer we veronderstellen dat \(m = \Theta(1)\), dan is de uitvoeringstijd van RadixSort \(T(n) = \Theta(n)\).
 
 
 
