@@ -420,11 +420,110 @@ Beschouw de decimale voorstelling van  \(x = x_{m-1}10^{m-1} + ... + 10x_1 + x_0
 \paragraph{Stelling 7.4.3}{\it De uitvoeringstijd van RadixSort is \(T(n) = \Theta(n)\), wanneer het aantal cijfers m begrensd is door een constante.}
 \paragraph{Bewijs}De uitvoeringstijd van het sorteren in elke stap van de for-lus is \(\Theta(n + 9)\), dus \(\Theta(n)\). Aangezien de for-lus m stappen heeft, is de totale complexiteit dus \(T(n) = \Theta(mn)\). Wanneer we veronderstellen dat \(m = \Theta(1)\), dan is de uitvoeringstijd van RadixSort \(T(n) = \Theta(n)\).
 
+\chapter{Grafen}
 
+\section{Grafen}
 
+\subsection{Wat is een graaf}
+\paragraph{Grafen}Grafen bestaan bestaan uit {\bf toppen} en {\bf bogen} en een {\bf incidentierelatie} hiertussen. De toppen en bogen kunnen bijkomende attributen hebben zoals kleur of gewicht.
+\paragraph{Grafen, toppen en bogen}Een graaf G = (V(G), E(G)) bestaat uit een eindige verzameling V(G) van objecten, toppen genoemd, en een verzameling E(G) van paren van elementen uit V(G), bogen genoemd. V(G) noemen we de {\bf toppenverzameling} van G genoemd en E(G) de {\bf bogenverzameling}. Elke boog is geassocieerd met een verzameling van twee toppen, {\bf eindpunten} genaamd. Een boog {\bf verbindt} zijn eindpunten. Het aantal toppen in G noemen we de {\bf orde} van de graaf en het aantal bogen noemen we de {\bf grootte}  \(\approx\) een (n, m)-graaf.
+\paragraph{Stelling 8.1.1}{\it Wanneer G een (n,m)-graaf is, dan geldt dat \(m \leq n(n-1)/2 \).}
+\paragraph{Bewijs}Dit volgt onmiddelijk uit het feit dat er \(n(n-1)/2\) mogelijke paren van elementen van V(G) zijn.
+\paragraph{Adjacent}Adjacente toppen zijn twee toppen, verbonden door een boog. We noteren: u \(\sim\) v. Adjacente bogen zijn twee bogen die een eindpunt gemeen hebben. Als een top v een eindpunt is van een boog e, dan noemen we v {\bf incident} met e en vice versa.
+\paragraph{Dichte graaf}Als de meeste bogen aanwezig zijn, dan is \(|E|\) = \(\Theta(|V|^2)\), dan spreken we van een dichte graaf. In de meeste gevallen is de graaf eerder {\bf ijl}, dan is \(|E|\) = \(\Theta(|V|)\) of slechts iets meer.
+\paragraph{Simpele grafen, multigrafen en pseudografen}Multigraaf: toppen kunnen door meer dan \"e\"en boog verbonden worden. We noemen deze twee of meer bogen, {\bf parallelle bogen}. Een collectie van parallelle bogen noemen we een {\bf multiboog}. {\bf Zelflus}: top die met zichzelf is verbonden. Indien een boog geen zelflus is, dan wordt die een {\bf eigenlijke boog} genoemd. Als we zelflussen en multibogen toelaten bekomen we een {\bf pseudograaf}. Een graaf zonder deze bogen noemen we een {\bf simpele graaf}.
+\paragraph{Gerichte grafen en gewogen grafen}Een {\bf gerichte boog of pijl} is een boog waarvan een van de eindpunten als {\bf kop} wordt aangeduid, en de andere als {\bf staart}. De pijl is gericht van zijn kop naar zijn staart. Multipijl: verzameling van twee of meer pijlen die dezelfde kop en dezelfde staart hebben. Een {\bf gerichte graaf} is een graaf waarvan alle bogen gericht zijn. Een {\bf gedeeltelijk gerichte graaf} bevat gerichte en ongerichte bogen. Een {\bf onderliggende graaf} van een (gedeeltelijk) gerichte graaf is de graaf die we bekomen door de richtingen op de bogen te verwijderen. \\ Anders kan het ook nuttig zijn om een attribuut aan de bogen van een graaf te hechten, {\it Bijvoorbeeld de afstand tussen twee steden}. Een {\bf gewogen graaf} is een graaf waarbij elke boog een getal toegekend is. We noemen dat getal {\bf het gewicht}.
 
+\subsection{De graad van een top}
+\paragraph{Nabuurschap}Het nabuurschap van een top v van een graaf G wordt gedefinieerd als \(N_G(v) = \{u \in V(G) | vu \in E(G)\}\). De {\bf graad} \(deg_G(v) = |N_g(v)|\), het aantal toppen adjacent met v, of aantal bogen incident met v. Een top met graad 0 is een {\bf ge\"isoleerde top}. Een top met graad 1 is een {\bf eindtop}. Een {\bf even top} is een top met een even graad en idem voor een {\bf oneven top}. De {\bf gradenrij} van een graaf G, is de rij gevormd door de graden van de toppen in stijgende volgorde te rangschikken. De kleinste graad is de {\bf minimumgraad} en doorgaans genoteerd als \(\delta(G)\). De grootste waarde is de {\bf maximumgraad} van G en genoteerd als \(\Delta(G)\).
+\paragraph{Stelling 8.1.2}{\it Een graaf G van orde \(n > 1\) heeft minstens \'e\'en paar toppen waarvan de graden gelijk zijn.}
+\paragraph{Bewijs}Het is gemakkelijk in te zien dat voor een graaf G van orde n en een top v van G geldt dat \(0 \leq deg(v) \leq n-1\). Er zijn dus n mogelijke waarden voor de graad van een top, nl. 0, ..., n-1. Er kan echter niet zowel een top van graad 0 als een top van graad n-1 zijn, omdat de aanwezigheid van een top van graad 0 impliceert dat elk van de n-1 andere toppen met hoogstens n-2 toppen adjacent kan zijn. De n toppen van G kunnen dus hoogstens n-1 mogelijke waarden voor hun graad realiseren. Gebruik makend van het {\it pigeonhole principle} volgt hieruit dat minstens twee van de n toppen dezelfde graad hebben.
+\paragraph{Stelling 8.1.3 (Euler)}{\it Zij G een graaf met orde n en een grootte m, en zij \(V(G) = \{v_1, ..., v_n\}\). Dan geldt dat \(\Sigma_{i=1}^n deg(v_i) = 2m\).}
+\paragraph{Bewijs}Wanneer de som van de graden van de toppen berekend wordt, wordt elke boog tweemaal meegerekend, nl. eenmaal voor elk van zijn twee incidente toppen.
+\paragraph{Ingraad, Uitgraad}De ingraad van een top v in een gerichte graaf G is het aantal pijlen dat naar v gericht is. De uitgraad van v is het aantal pijlen dat vanuit v gericht is.
+\paragraph{Stelling 8.1.4}{\it In een gerichte graaf G zijn de som van de ingraden en de som van de uitgraden allebei gelijk aan het aantal bogen van G}.
+\paragraph{Bewijs}Elke gerichte boog e draagt \'e\'en bij aan de ingraad van de staart van e en \'e\'en aan de uitgraad van de kop van e.
 
+\subsection{Paden en samenhangendheid}
+\paragraph{Wandeling}Een wandeling van top \(v_0\) naar top \(v_l\) is een rij met afwisselend toppen en bogen, van de vorm \(W = (v_0, e_1, v_1, e_2, ..., v_{l-1}, e_l,v_l)\), zondanig dat de eindpunten van elke boog \(e_i\) uit de rij \(v_{i-1}\) en \(v_i\) zijn, voor elke \(i = 1,...,l\). In een gerichte graaf is dit een {\bf gerichte wandeling} van \(v_0\) naar \(v_l\), en een rij met afwisselend toppen en pijlen. Een (gerichte) wandeling van een top x naar een top y wordt ook een (gerichte) x-y-wandeling genoemd. Als \(x = y\), dan noemen we dit een {\bf gesloten}, anders een {\bf open} wandeling.
+\paragraph{Spoor}Een spoor is een wandeling waarin geen herhalende bogen voorkomen. Een gesloten spoor noemen we een {\bf circuit}. 
+\paragraph{Pad} Een pad is een wandeling waarin geen herhalende toppen voorkomen, behalve evt. begin en eindpunt. Een gesloten pad noemen we een {\bf cykel}.
+\paragraph{Gericht} We hebben eveneens een gericht spoor en een gericht pad.
+\paragraph{Lengte/Taille}Lengte van een wandeling, spoor of pad is het aantal bogen hierin. De taille van een graaf G is de lengte van de kortste cykel in G.
+\paragraph{Euleriaans spoor}Dit is een open spoor dat elke boog van G bevat, een {\bf euleriaans circuit} is een gesloten spoor dat elke boog van G bevat. Een {\bf euleriaanse graaf} is een graaf die een euleriaans circuit bevat.
+\paragraph{Hamiltoniaans pad}Is een pad dat elke top van G aandoet. Een {\bf hamiltoniaanse cykel} is een cykel die elke top van G aandoet. Een {\bf hamiltoniaanse graaf} is een graaf die een hamiltoniaanse cykel bevat.
+\paragraph{}Een top v van een graaf G is {\bf bereikbaar vanuit} een top u van G als er een wandeling van u naar v is. Een graaf G is {\bf Ssamenhangend} als er voor elk paar toppen u en v een wandeling van u naar v is, m.a.w. als elke top bereikbaar is vanuit elke andere top.
+\paragraph{}Twee toppen u en v in een gerichte graaf D zijn {\bf wederzijds bereikbaar} als D een gerichte u-v-wandeling een een gerichte v-u-wandeling bevat. Een gerichte graaf is {\bf sterk samengangend} als elke twee toppen ervan wederzijds bereikbaar zijn. Een gerichte graaf is {\bf zwak samenhangend} als de onderliggende graaf samenhangend is.
 
+\subsection{Bomen en wouden}
+\paragraph{Acyclische graaf} Dit is een graaf waarin geen cykels optreden. We noemen zo'n graaf een {\bf woud}. Een {\bf boom} is een samenhangende graaf die geen cykels bevat. Een {\bf gerichte acyclische graaf, DAG} is een gerichte graaf waarin geen gerichte cykels optreden.
+
+\subsection{Deelgrafen}
+\paragraph{Deelgraaf}Is een graaf H van een graaf G als \(V(H) \subseteq V(G)\) en \(E(H) \subseteq E(G)\). Een {\bf echte deelgraaf} H van een graaf G is een deelgraaf waarvoor de toppenverzameling V(H) een echte deelverzamelig is van V(G). Het {\bf gewicht} w(H) van een deelgraaf H van een gewogen graaf G is de som van de gewichten van de bogen van H.
+\paragraph{}Zij S een niet-ledige deelverzameling van V(G). De {\bf deelgraaf ge\"induceerd door } S, genoteerd als \(<S>\), is de maximale deelgraaf van G met toppenverzameling S, m.a.w. \(<S>\) bevat precies die bogen van G die toppen van S verbinden. Het is een {\bf top-ge\"induceerde deelgraaf, of ge\"induceerde deelgraaf}, als H : \(<S>\) voor zekere niet-ledige deelverzameling S van de toppen van G.
+\paragraph{}Een {\bf deelgraaf ge\"induceerd door} een niet-ledige deelverzameling X van bogen van G, genoteerd als \(<X>\), is de minimale deelgraaf van G met bogenverzameling X, m.a.w. \(<X>\) bestaat uit die toppen van G die incident zijn met ten minste \'e\'en boog van X. een deelgraaf H van een graaf G is een {\bf boogge\"induceerde deelgraaf} als H = \(<X>\) voor zekere niet-ledige verzameling X van bogen van G.
+\paragraph{Opspannend}Een deelgraaf H van een graaf G wordt een {\bf opspannende deelgraaf} van G genoemd als V(H) = V(G). Een {\bf opspannend woud} van een graaf G is een opspannende deelgraaf van G die een woud is. Een {\bf opspannende boom} van een graaf G is een opspannende deelgraaf van G die een boom is.
+\paragraph{Stelling 8.1.5}{\it Een graaf is samenhangend als en slechts als hij een opspannende boom bevat.}
+\paragraph{Bewijs}Veronderstel dat G een opspannende boom T bevat. Per definitie is T samenhangend, dus is er een pad tussen elk paar toppen van T, en dus ook tussen elk paar toppen van G.\\ \\
+Veronderstel dat G samenhangend is. Als G geen boom is, bevat G minstens \'e\'en cykel.  Wanneer we uit dergelijke cykel een boog verwijderen, blijft de graaf nog steeds samenhangend. Op die manier kunnen we uit elke cykel een boog verwijderen tot we een acyclische graaf bekomen. Deze is nog steeds samenhangend en is dus een opspannende boom van de oorspronkelijke graaf.
+\paragraph{Component}De component van een graaf G is een maximale samenhangende deelgraaf van G.
+
+\subsection{Scharnierpunten en bruggen}
+\paragraph{Schrapping}Zij G een graaf. De schrapping van een echte deelverzameling S van toppen uit G is de deelgraaf die bestaat uit de toppen van G die niet tot S behoren, en de bogen van G die niet incident zijn met een top in S. We noteren deze deelgraaf als G - S. Als S bestaat uit \'e\'en enkele top v, dan noteren we G -v.\\ De schrapping van een verzameling X van bogen van een graaf G, genoteerd als G-X, is de opspannende deelgraaf van G die bekomen wordt door het verwijderen van de bogen van X uit E(G).
+\paragraph{Toevoegen}We kunnen ook paren van niet-adjacente toppen van een graaf G toevoegen aan de graaf. 
+\paragraph{Toppensnede}Zij G een samenhangende graaf, een {\bf toppensnede} in G is dan een toppenverzameling S zodanig dat G-S niet samenhangend is. Een {\bf scharnierpunt} is een toppensnede bestaande uit één enkele top.
+\paragraph{Bogensnede}Een bogensnede in G is een verzameling bogen X, zodanig dat G - X niet samenhangend is, en G - X' wel samenhangend is, voor elke \(X' \subset X\). Een bogensnede X partitioneert de toppen van G in twee disjuncte verzamelingen \(V_1, V_2\), zodanig dat elke boog uit X een eindtop in \(V_1\) en een eindtop in \(V_2\) heeft. Een {\bf brug} is een bogensnede bestaande uit \'e\'en enkele boog.
+\paragraph{Stelling 8.1.6}{\it Een boog e van een samenhangende graaf G is een brug van G als en slechts als e niet op een cykel in G ligt.}
+\paragraph{Bewijs}Is de boog e een brug, dan moeten zijn toppen noodzakelijkerwijs in verschillende componenten liggen als we e wegnemen uit G. Dit is duidelijk niet het geval als e op een cykel ligt. Omgekeerd, onderstel nu dat de boog e geen brug is. Nemen we e weg, dan bekomen we een samenhangende graaf. In het bijzonder zijn de eindtoppen v en w van e verbonden met elkaar door een pad dat de boog e niet bevat. Toevoegen van e aan het pad geeft ons een cykel die e bevat.
+
+\subsection{Speciale families van grafen}
+\paragraph{Complete graaf}Dit is een graaf waarbij elk paar toppen verbonden is door een boog. Een complete graaf met n toppen noteren we als \(K_n\).
+\paragraph{Bipartiete graaf}Dit is een graaf waarvan de toppenverzameling V kan worden opgesplitst in twee deelverzamelingen \(V_1\) en \(V_2\) zodanig dat elke boog van G een eindpunt in \(V_1\) en een eindpunt in \(V_2\) heeft.  Het paar (\(V_1, V_2\)) wordt de {\bf bipartitie} van G genoemd, en \(V_1, V_2\) zijn de {\bf bipartitieverzamelingen}
+\paragraph{Complete bipartiete graaf}Dit is een bipartiete graaf waarbij elke top van de ene bipartitieverzameling verbonden is met elke top van de andere bipartitieverzameling. Zo'n graaf met p toppen en q toppen in respectievelijk \(V_1, V_2\) noteren we als \(K_{p,q}\).
+\paragraph{Regulier}Een graaf G is r-regulier of regulier van graad r, als elke top van G graad r heeft, \(r > 0\). 
+\paragraph{Padgraaf}Een padgraaf \(P_n\) met n toppen is een samenhangende graaf met \(|V(P_n)| = |E(P_n)| + 1\), die getekend kan worden zodanig dat al zijn toppen en bogen op \'e\'en enkele rechte lijk liggen.
+\paragraph{Cykelgraaf}Is een samenhangende graaf \(C_n\) met n toppen en met \(|V(C_n)| = |E(C_n)|\) die zodanig kan worden getekend dat al zijn toppen en bogen op een cirkel liggen.
+\paragraph{Hyperkubus}Is een d-reguliere graaf \(Q_d\), waarvan de toppenverzameling bestaat uit de bitstrings van lengte d, zodanig dat er een boog is tussen twee toppen als en slechts als ze in slechts \'e\'en bit verschillen.
+
+\section{Voorstellen van grafen}
+
+\subsection{Adjacentiematrixvoorstelling}
+\paragraph{Adjacentiematrix}Zij \(G = (V,E)\) een ongewogen, ongerichte graaf met toppenverzameling \(V = \{v_1, v_2, ..., v_n\}\). De adjacentiematrix \(A = [a_{ij}]\) van G is de n x n matrix gedefinieerd door:\\
+\(a_{ij} =  \begin{cases} 1, als\ v_iv_j \in E, \\ 0, anders. \end{cases} \)
+\paragraph{Gerichte grafen}Eerder genoemd kostenmatrix. Hierin wordt het gewicht van de boog \(v_iv_j\) weergegeven op positie \(a_{ij}\).
+\paragraph{Voor multigrafen en pseudografen} \(a_{ij} =  \begin{cases} \mbox{het aantal bogen tussen } v_i, v_j, als\ v_i \neq v_j, \\ \mbox{het aantal zelflussen in } v_i, als\ v_i = v_j. \end{cases} \)
+\paragraph{Geheugen}Deze matrix neemt \(n^2\) geheugen in, wat soms een verspilling is, vandaar volgende voorstelling.
+
+\subsection{Adjacentielijstvoorstelling}
+\paragraph{Adjacentielijstvoorstelling}Associeert met elke top van G een lijst van toppen die ermee adjacent zijn. {\it Bijvoorbeeld bij een gerichte graaf: lijst met uitburen of bij gewogen graaf gewicht ook bijhouden.}
+\paragraph{Geheugen}Voor deze voorstelling zijn er \(\Theta(n + m)\) geheugenplaatsen nodig, met n toppen en m bogen van een graaf G.
+
+\section{Euleriaanse grafen}
+\subsection{Stadswandeling in K\"oningsberg}
+\subsection{Karakterisatie van euleriaanse grafen}
+\paragraph{Stelling 8.3.1}{\it Een samenhangende multigraaf G is euleriaans als en slechts als de graad van elke top even is.}
+\paragraph{Bewijs}Veronderstel dat G een euleriaanse multigraaf is. Dan bevat G een euleriaans circuit C, dat begint en eindigt in een top v. We tonen aan dat elke top van G even graad heeft. Beschouw eerst een top \(u \neq v\). aangezien u noch de eerste noch de laatste top van C is, wordt de top u bij ieder voorkomen in C binnengekomen door een bepaalde boog en verlaten door een andere boog. M.a.w. ieder voorkomen van u in C draagt precies 2 bij tot de graad van u, zodat u even graad heeft. Voor de top v draagt elk van de voorkomens aan het begin en het einde van het circuit C precies 1 bij tot de graad van v, zodat dus ook de top v even graad heeft.\\ \\
+Omgekeerd, veronderstel dat elke top van G even graad heeft. We tonen aan dat G euleriaans is door een euleriaans circuit te construeren. Selecteer een top v van G en start een spoor T in v. We bouwen dit spoor zo ver mogelijk op, totdat we een top w bereiken zodanig dat de enige bogen incident met w reeds tot T behoren. We beweren dat \(w = v\). Veronderstel dat \(w \neq v\). Iedere keer als w optreedt in T v\'o\'or de laatste keer wordt \'e\'en boog gebruikt om w binnen te komen en wordt een andere boog gebruikt om w te verlaten. De voorkomens van w in T v\'o\'or de laatste keer komen dus overeen met een even aantal bogen incident met w. Wanneer w echter voor de laatste keer in T optreedt, wordt slechts \'e\'en boog incident met w gebruikt. M.a.w. het spoor T bevat een oneven aantal bogen incident met w. Aangezien w even graad heeft, moet er dus minstens \'e\'en boog incident met w in T voorkomen. Dus, de bewering dat w = v is correct, en T is dus eigenlijk een circuit. Als T alle bogen van G bevat, dan is T een euleriaans circuit en is G dus en euleriaanse graaf.\\ \\
+Veronderstel nu dat T niet alle bogen van G bevat. Aangezien G samenhangend is, bestaat er een top u in T die incident is met bogen die niet tot T behoren. Beschouw de multigraaf H bekomen door de bogen van T uit G te verwijderen. Aangezien T niet alle bogen van G bevat , is de multigraaf H niet-leeg. Bovendien is elke top van T incident met een even aantal bogen van T, zodat elke top in H ook even graad heeft. Zij \(H_1\) de component van H die de top u bevat. Wanneer we een spoor T' in u beginnen, en dit zo ver mogelijk opbouwen, dan bekomen we net zoals voordien dat T' eindigt in u, zodat T' een circuit is. Wanneer we het circuit T' tussenvoegen in T op een plaats waar u voorkomt, dan bekomen we een circuit \(T_1\) dat begint en eindigt in v, en dat meer bogen dan T bevat.\\ \\
+Als \(T_1\) alle bogen van G bevat, dan is \(T_1\) een euleriaans circuit en is G een euleriaanse multigraaf. In het andere geval, wanneer \(T_1\) niet alle bogen van T bevat, dan herhalen we bovenstaande procedure totdat we een euleriaans circuit bekomen.
+\paragraph{Stelling 8.3.2}{\it Een samenhangende multigraaf G bevat een euleriaans spoor als en slechts als G precies twee toppen met oneven graad heeft. Bovendien begint het euleriaans spoor dan in een van de toppen met oneven graad en eindigt het in de andere top met oneven graad.}
+\paragraph{Chinese postbodeprobleem}De {\bf kost} is het totale extra bogen die worden toegevoegd in een graaf om een euleriaans te krijgen.
+
+\section{Hamiltoniaanse grafen en TSP}
+
+\subsection{Hamiltoniaanse grafen}
+\paragraph{Onhandelbaar}Het bepalen van een hamiltoniaanse cykel in een algemene graaf is een onhandelbaar probleem. Er is dus geen goed algoritme voor gekend.
+
+\subsection{Handelreizigersprobleem (TSP)}
+\paragraph{}Zoekt een hamiltoniaanse cykel in een graaf waarvoor de totale boogkost minimaal is.
+
+\subsection{Algoritmen voor TSP}
+\paragraph{}Vereist berekenen van het gewicht van \((n-1)!/2\) hamiltoniaanse cykels van G, als volgt. Een hamiltoniaanse cykel kan worden voorgesteld als een opeenvolging van toppen, startend met top 1, die alle toppen bevat. Een oplossing voor het handelsreizigersprobleem wordt bekomen door alle permutaties van dergelijke opeenvolgingen van toppen te genereren, de lengte van de corresponderende cykels te berekenen en de kortste hiervan te bepalen.
+
+\section{Gerichte acyclische grafen}
+
+\subsection{Topologisch sorteren van een DAG}
+\paragraph{Topologische ordening}Een topologische ordeningen in een DAG is een ordening van de toppen van een gerichte acyclische graaf zodanig dat, als er een pad is van u naar v, dan v in de ordening n\'a u komt. Het {\bf topologisch sorteren} is het bepalen van een topologische ordening.
 
 
 
