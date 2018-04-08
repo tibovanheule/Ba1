@@ -242,6 +242,8 @@ Hieruit volgt dat \(log_2(n!) = \Omega(nlogn)\). Dus hebben we bewezen dat \(log
 \paragraph{NP-moeilijk} Een beslissingsprobleem is NP-moeilijk als elk probleem in de klasse NP polynomiaal herleidbaar is tot R.
 \paragraph{NP-compleet} Een NP-moeilijk beslissingsprobleem R is NP-compleet als R tot de klasse NP behoort. De klasse van NP-complete problemen wordt ook de klasse NPC genoemd.
 
+\chapter{Algoritmen en abstracte datatypes in de Java API}
+
 \chapter{Gebruik van stapels en (prioriteitswachtlijnen)}
 
 \section{Stapels en compilers}
@@ -525,8 +527,136 @@ Als \(T_1\) alle bogen van G bevat, dan is \(T_1\) een euleriaans circuit en is 
 \subsection{Topologisch sorteren van een DAG}
 \paragraph{Topologische ordening}Een topologische ordeningen in een DAG is een ordening van de toppen van een gerichte acyclische graaf zodanig dat, als er een pad is van u naar v, dan v in de ordening n\'a u komt. Het {\bf topologisch sorteren} is het bepalen van een topologische ordening.
 
+\chapter{Bomen}
+
+\section{Bomen}
+
+\subsection{Eigenschappen van bomen}
+\paragraph{Bomen}Zijn de eenvoudigste samenhangende grafen. Is een samenhangende graaf die geen cykels bevat. Hieruit volgt onmiddelijk (Stelling 8.1.6) dat elke boog van een boom een brug is.
+\paragraph{Stelling 9.1.1}{\it Zij G een graaf met n toppen, dan zijn volgende uitspraken equivalent.}
+\begin{enumerate}
+{\it
+\item G is een boom.
+\item G heeft geen cykels en bevat n - 1 bogen.
+\item G is samenhangend en bevat n - 1 bogen.
+\item G is samenhangend en elke boog is een brug.
+\item Elke twee toppen van G zijn door precies \'e\'en pad verbonden.
+\item G bevat geen cykels en voor elke nieuwe boog e bevat G + e precies \'e\'en cykel.
+}
+\end{enumerate}
+\paragraph{Bewijs}Wanneer \(n = 1\) dan zijn alle uitspraken triviaal waar, zodat we veronderstellen dat \(n \geq 2\). \\ \\
+\(1 \Rightarrow 2\): Dat een boom geen cykel heeft, volgt onmiddellijk uit de definitie van bomen. Dat een boom \(n - 1\) bogen heeft, bewijzen we als volgt door sterke inductie op het aantal toppen. \(K_1\) is de enige boom met 1 top en heeft 0 bogen, zodat het gestelde geldt voor \(n = 1\). Zij \(k \geq 2\) een natuurlijk getal en veronderstel dat het gestelde geldt voor elke boom met minder dan k toppen. Zij T een boom met \(n = k\) toppen en m bogen, en zij e een boog van T. We hebben reeds opgemerkt dat e een brug van T is, zodat T - e een woud met twee componenten is. Noteren we de twee componenten van \(T - e\) door \(T_1\) en \(T_2\), met resp. \(n_1\) en \(n_2\) toppen, en \(m_1\) en \(m_2\) bogen. Aangezien \(n_i < k\), voor \(i = 1,2\), weten we uit de inductiehypothese dat \(m_i = n_i - 1\), voor \(i = 1,2\). Aangezien \(n = n_1 + n_2\) en \(m = m_1 + m_2 + 1\), geldt dat \(m = (n_1 - 1) + (n_2 - 1) + 1 = n_1 + n_2 - 1 = n - 1\). Door inductie volgt het gestelde. \\ \\
+\(2 \Rightarrow 3\): Voor elke samenhangende component met \(n_i\) toppen van G geldt per definitie dat deze een boom is en dus \(n_i - 1\) bogen heeft. Als er zo c componenten zijn, dan hebben we in het totaal \(n - c\) bogen. Dus \(n - c = n - 1\), waaruit \(c = 1\) volgt. Aldus is G samenhangend. \\ \\
+\(3 \Rightarrow 4\): Is een bepaalde boog geen brug, dan bekomen we door hem te verwijderen een samenhangende graaf met \(n\) toppen en \(n - 2\) bogen. Door de \(n - 2\) bogen allemaal te verwijderen kunnen we in totaal ten hoogste \(n - 2 + 1 = n - 1\) samenhangende componenten verkrijgen, strijdig met het feit dat we er \(n\) hebben (namelijk, de \(n\) toppen). Dus elke boog is een brug. \\ \\
+\(4 \Rightarrow 5\): Daar G samenhangend is, zijn twee toppen \(u\) en \(v\) door ten minste \'e\'en pad verbonden. Veronderstel nu dat G twee \(u-v\)-paden bevat, die we noteren door \(P\) en \(Q\). Aangezien \(P\) en \(Q\) verschillende \(u-v\)-padenzijn, moet er een top \(x\) bestaan (eventueel is \(x = u\)) die zowel tot \(P\) als tot \(Q\) behoort, zodanig dat de volgende top na \(x\) op \(P\) verschilt van de top na \(x\) op \(Q\). Zij \(y\) de eerste top na \(x\) op \(P\) die ook tot \(Q\) behoort (eventueel is \(y = v\)). Dit levert twee \(x-y\)-paden die enkel \(x\) en \(y\) gemeenschappelijk hebben. Deze twee paden produceren een cykel \(C\) in \(G\). Geen enkele boog van de cykel \(C\) is een brug, strijdig met de gegevens. Dus elke twee toppen \(u\) en \(v\) worden door een uniek pad verbonden. \\ \\
+\(5 \Rightarrow 6\): Indien G een cykel bevatte, dan zouden twee willekeurige toppen van die cykel door twee verschillende paden worden verbonden, een strijdigheid. We voegen nu een boog uv toe en noemen de nieuwe graaf G'. Daar er een u-v-pad bestond in G bekomen we een cykel in G' door de boog uv aan dat pad toe te voegen. Daar G geen cykels bevat, moet elke cykel in G' de boog uv bevatten en een u-v-pad in G (want dit u-v-pad kan de boog uv niet meer bevatten). Maar in G is dit pad uniek. We besluiten dat de cykel uniek is.\\ \\
+\(6 \Rightarrow 1\): We moeten aantonen dat G samenhangend is. Zijn er ten minste twee samenhangende componenten \(G_1\) en \(G_2\) (die per definitie allebei bomen zijn), dan voegen we een boog doe die een top in \(G_1\) verbindt met een top in \(G_2\). Deze boog is in de nieuwe graaf duidelijk een brug, dus niet bevat in een cykel, strijdig met de onderstellingen. Er is dus maar \'e\'en samenhangende component en bijgevolg is G een boom.
+\paragraph{Eigenschap 9.1.2}{\it Wanneer u en v twee niet-adjacente toppen in een boom T zijn, dan bevat \(T + uv\) precies \'e\'en cykel C, die de boog uv moet bevatten. Wanneer een boog e uit C verwijderd wordt, dan wordt opnieuw een boom bekomen.}
+
+\subsection{Gewortelde bomen}
+\paragraph{Gerichte boom}Dit is een gerichte graaf, waarvan de onderliggende graaf een boom is. 
+\paragraph{Gewortelde boom}Dit is een gerichte boom die een speciale top r bevat, de {\bf wortel} van de boom genoemd, zodanig dat er voor elke top v van de boom een r-v-pad bestaat.
+\paragraph{Stelling 9.1.3}{\it Een gerichte boom T is een gewortelde boom als en slechts als T een top r bevat met ingraad 0, terwijl alle andere toppen v van T ingraad 1 hebben.}
+\paragraph{Bewijs}Onderstel dat de gerichte boom T geworteld is. De wortel r heeft ingraad 0, want als v een top is die adjacent is met r en vr zou een gerichte boog zijn met kop v, dan is er geen gericht r-v-pad, strijdig met het feit dat r de wortel is. Zij nu v een willekeurige top verschillend van r. Daar er een gericht r-v-pad bestaat, heeft v al ingraad minstens 1. Als nu w een top is adjacent met v en wv is een gerichte boog met kop w, dan beschouwen we een gericht r-w-pad. Daar de onderliggende graaf een boom is, moet ofwel het r-w-pad de top v bevatten (strijdig met de onderstelling dat de boog wv als kop w heeft), ofwel moet het r-v-pad de top w bevatten. Aldus is w uniek en heeft v inderdaad ingraad 1. Onderstel vervolgens dat er een top r is met ingraad 0, en dat elke andere top ingraad 1 heeft. Zij v een willekeurige top. We bewijzen door middel van inductie op de afstand \(d(r,v)\) det het unieke r-v-pad in de onderliggende boom gericht is. Dit is duidelijk voor \(d(r,v) = 1\), daar de ingraad van r gelijk aan 0 is. Is w de unieke top van het r-v-pad adjacent aan v, dan hebben we een gericht r-w-pad door de inductiehypothese. De boog vw kan onmogelijk v als kop hebben, want dan zou w ingraad minstens 2 hebben. Dus vw is gericht van w naar v en we hebben een gericht r-v-pad.
+\paragraph{Gevolg 9.1.4}{\it Elke gewortelde boom heeft een unieke wortel.}
+\paragraph{Niveau}Een top x in een gewortelde boom T met wortel r bevindt zich op niveau of {\bf diepte} i als en slechts als het r-x-pad in T lengte i heeft. Het grootste natuurlijke getal h waarvoor er een top op niveau h in een gewortelde boom T is, wordt de {\bf diepte van} T genoemd.
+\paragraph{Hoogte}De hoogte van een top x in een gewortelde boom T met wortel r is de lengte van het pad van x naar zijn diepste nakomeling die een blad is. De {\bf hoogte van} T is de hoogte van de wortel r.
+\paragraph{Kind / Ouder}Zij T een gewortelde boom. Wanneer een top v van T adjacent is met u, waarbij u in het niveau onder v ligt, dan wordt u een kind van v genoemd, en v is de ouder van u. Een top w is een {\bf afstammeling} van een top v en v is voorouder van w als het v-w-pad in T onder v ligt. Een top zonder kinderen wordt een {\bf blad} genoemd. De andere toppen, m.a.w. de toppen die wel kinderen hebben, worden de {\bf interne toppen} van de gewortelde boom genoemd.
+
+\subsection{Binaire bomen}
+\paragraph{Binaire boom}K-aire boom: gewortelde boom waarbij elke top ten hoogste k kinderen heeft. We noemen die boom een complete k-aire boom, als elke top ofwel k kinderen ofwel geen kinderen heeft. Een {\bf binaire boom} is een 2-aire boom waarin \'e\'en kind als {\bf linkerkind} van zijn ouder beschouwd wordt en het andere als {\bf rechterkind}. Idem: {\bf complete binaire boom}.
+\paragraph{Lemma 9.1.5.}{\it Een binaire boom bevat ten hoogste \(2^i\) toppen van niveau \(i (i \geq 0\)).}
+\paragraph{Bewijs}Het bewijs verloopt door inductie op i. De wortel is de enige top van niveau \(i = 0\), zodat het resultaat waar is voor \(i = 0\). De inductiehypothese is dat het resultaat waar is voor het niveai i, m.a.w. het maximum aantal toppen van niveau i is \(2^i\). Aangezien elke top van niveau i in een binaire boom ten hoogste van graad 2 is, is het maximum aantal toppen van niveau \(i + 1\) tweemaal zo groot als het maximum aantal toppen van niveau i, namelijk \(2 * 2^i = 2^{i + 1}\).
+\paragraph{Stelling 9.1.6}{\it Voor een binaire boom T van hoogte h met n toppen is \(n \leq 2^{h + 1} - 1\)}
+\paragraph{Bewijs}Wegens Lemma 9.1.5 is het maximum aantal toppen op niveau i in een binaire boom gegeven door \(2^i\). Het maximum aantal toppen in een binaire boom van hoogte \(h \geq 0\) is dus gelijk aan \(\Sigma_{i = 0}^h 2^i = 2^{h + 1} - 1\).
+\paragraph{Stelling 9.1.7}{\it Voor een binaire boom T van hoogte h met n toppen is \(h \geq \lceil log_2(\frac{n + 1}{2})\rceil\)}.
+\paragraph{Bewijs}Wegens stelling 9.1.6 weten we dat \(n \leq 2^{h + 1} - 1\), of dus \(2^h \geq \frac{n + 1}{2}\). Dus \(h \geq log_2(\frac{n + 1}{2})\), en aangezien h een geheel getal is, \(h \geq \lceil log_2(\frac{n + 1}{2})\rceil \).
+\paragraph{Stelling 9.1.8}{\it Voor een binaire boom T van hoogte h met b bladeren is \(h \geq log_2b\).}
+\paragraph{Bewijs}We gebruiken inductie op h om de equivalente ongelijkheid \(b \leq 2^h\) te bewijzen. Voor \(h = 0\) bestaat de boom uit \'e\'en top, die ook een blad is, m.a.w. \(b = 1\) en dus \(b \leq 2^h\). Veronderstel nu dat de ongelijkheid voldaan is voor elke binaire boom met hoogte kleiner dan h. We beschouwen nu een boom T van hoogte h met b bladeren.\\
+We beschouwen eerst het geval dat de wortel van T slechts 1 kind heeft. Dit is een binaire boom van hoogte \(h - 1\) die ook b bladeren heeft. Gebruik makend van de inductiehypothese bekomen we \(b \leq 2^{h - 1}\). Aangezien \(2^{h - 1} < 2^h\), is in dit geval dus ook \(b \leq 2^h\). \\Vervolgens beschouwen we het geval dat de wortel van T twee kinderen heeft. Zij \(h_l\) de hoogte van de linkerdeelboom en \(h_r\) de hoogte van de rechterdeelboom; er geldt dat \(h_l \leq h - 1\) en \(h_r \leq h - 1\). Zij \(b_l\) het aantal bladeren in de linkerdeelboom en \(b_r\) het aantal bladeren in de rechterdeelboom. Uit de inductiehypothese volgt dat \(b_l \leq 2^{h_l}\) en \(b_r \leq 2^{h_r}\). Hieruit bekomen we dat \(b = b_l + b_r \leq 2^{h_l} + 2^{h_r} \leq 2^{h - 1} + 2^{h - 1} \leq 2^h\), hetgeen het gestelde bewijst.
+\paragraph{Stelling 9.1.9}{\it Voor een ternaire boom T van hoogte h met b bladeren is \(h \geq log_3b.\)}
+
+\section{Bomen en recursie}
+
+\subsection{Recursieve verwerking van gewortelde bomen}
+\paragraph{}Een (niet-ledige) {\bf gewortelde boom} T is een (niet-ledige) eindige verzameling van toppen waarin \'e\'en top als de {\bf wortel} van de boom wordt aangeduid. De overige toppen zijn gepartitioneerd in \(k \geq 0\) disjuncte verzamelingen \(T_1, T_2, ..., T_k\) die alle bomen zijn en die {\bf deelbomen} van de wortel worden genoemd.
+
+\subsection{Doorlopen in preorde, postorde en inorde}
+\paragraph{Doorlopen van een binaire boom}Hieronder verstaat men: systematische manier om alle toppen van de boom te bezoeken.
+\paragraph{Preorde}Dit betekent dat men eerst de wortel verwerkt, dan zijn linkerdeelboom in preorde en dan zijn rechterdeelboom in preorde doorloopt.
+\paragraph{Postorde}Dit betekent eerst linkerdeelboom in postorde, dan zijn rechterdeelboom in postorde om ten slotte de wortel zelf te verwerken.
+\paragraph{Inorde}Dit betekent eerst de linkerdeelboom van wortel doorlopen in inorde, dan de wortel verwerken en dan de rechterdeelboom in inorde verwerken. 
+\paragraph{}In elk van deze gevallen verloopt dit uiteraard recursief
+\paragraph{Stelling 9.2.1}{\it Zij T een boom met n toppen. Dan gebeurt zowel doorlopen in preorde, als doorlopen in postorde en doorlopen in inorde in tijd \(\Theta(n)\)}.
+\paragraph{Bewijs}We geven het expliciete bewijs voor doorlopen in preorde; de andere bewijzen zijn volledig analoog. We bewijzen door inductie dat lijn 1 uit het algoritme in figuur (zie pg. 185)(m.a.w. het bezoeken van een top) in totaal n keer uitgevoerd wordt.\\ \\
+Voor \(n = 1\) heeft de boom 1 top en wordt de lijn 1 slechts eenmaal uitgevoerd, aangezien er geen recursieve oproepen gebeuren. Veronderstel vervolgens dat \(n > 1\) en dat voor elke \(m < n \) een boom met m toppen deze lijn m keer uitgevoerd wordt. Zij k het aantal toppen in de linkerdeelboom van de wortel, dan is \(n - k - 1\) het aantal toppen in de rechterdeelboom; in beide deelbomen is aantal toppen strikt kleiner dan n. Uit de inductiehypothese volgt dat het totaal aantal keer dat lijn 1 uitgevoerd wordt, gegeven wordt door \(1 + k + (n - k - 1) = n\). Hieruit volgt onmiddellijk dat de uitvoeringstijd voor het doorlopen in preorde gegeven wordt door \(\Theta(n)\).
+
+\section{Systematisch doorlopen van een graaf}
+
+\subsection{Breedte-eerst-doorlopen van een graaf}
+\paragraph{Breedte-eerst-doorlopen}Dikwijls afgekort als BFS, bezoekt de toppen van een (evt.gerichte) graaf G op een systematische manier, startend vanuit een bepaalde top r van G, ook de {\bf wortel} genoemd. 
+\paragraph{Werkwijze}De wortel is de eerste actieve top. Tijdens elk stadium in het doorlopen worden alle toppen adjacent vanuit de huidige top onderzocht op toppen die nog niet eerder bezocht zijn. De nieuwe actieve top wordt de minst recent bezochte top die nog niet de rol van huidige top gespeeld heeft. Het proces eindigt wanneer alle toppen als huidige top gediend hebben. \\
+Aangezien de volgende actieve top de {\it minst recent} bezochte top is: werken met toppen in een {\bf wachtlijn}. 
+\paragraph{Labelen}Dit algoritme werkt m.b.v. het labelen van toppen. Dit kan op een manier naar keuze. {\it Bijvoorbeeld: alle labels 0, bij elk (nieuw!) bezoek van een top geven we het eerstvolgend beschikbare label. Indien niet alle toppen een positief label hebben, beginnen we het algoritme opnieuw vanaf die top met label 0.}
+\paragraph{Breedte-eerst}Na dit algoritme, bekomen we een opspannend woud F, we noemen dit woud een {\bf breedte-eerst-woud}. Indien G samenhangend is, dan wordt een {\bf breedte-eerst-boom} bekomen.
+\paragraph{Complexiteit}Elke boog wordt hoogstens tweemaal bekeken (eenmaal uit elk van zijn eindtoppen), een geïsoleerde top wordt hoogstens eenmaal bezocht. De complexiteit is dus \(\Theta(n + m)\).
+
+\subsection{Diepte-eerst-doorlopen van een graaf}
+\paragraph{Diepte-eerst-doorlopen}Dit wordt ook wel DFS genoemd. 
+\paragraph{Werkwijze}Zij \(G = (V,E)\) een graaf met \(V = \{v_1,v_2,...,v_n\}\). De huidige top wordt de {\bf actieve top} genoemd. We beginnen met het selecteren van een eerste te bezoeken top, nl. \(v_1\), die het label 1 toegekend krijgt. Vervolgens selecteren we een topo adjacent met 1, deze top krijgt label 2 en deze top wordt de actieve top. De boog die de toppen met label 1 en 2 verbindt, wordt aan een verzameling B toegevoegd. \\ \\
+Algemeen, zij k het label van de huidige actieve top in de zoektocht, en veronderstel dat nite alle toppen in de component van G die k bevat, reeds bezocht zijn. We gaan als volgt verder. Als er onbezochte toppen adjacent met k zijn, selecteer een top adjacent met k die nog niet bezocht is, en label hem met het volgende beschikbare label; deze top wordt de nieuwe actieve top en de boog tussen  k en deze top wordt toegevoegd aan de verzameling B. Wanneer echter alle toppen adjacent met k reeds bezocht zijn, dan beschouwen we k als een {\bf doodlopende top} en we keren terug (genaamd: {\bf backtracking}) naar de top die de actieve to pwas vooraleer we k voor het eerst bezochten en deze top wordt de nieuwe huidige actieve top. Deze stop wordt herhaald totdat elke top in deze component van G bezocht is. Wanneer niet alle toppen van G bezocht werden, dan wordt een niet-bezochte top gekozen als de volgende actieve top, waarna het proces verder gaat.
+\paragraph{Label} Het label dat wordt toegekend wordt aan een top v wordt de {\bf diepte-eerst-index} van v genoemd en genoteerd door dfi(v).
+\paragraph{Diepte-eerst}We noemen \(<B>\) een opspannend woud, het {\bf diepte-eerst-woud}. Als G samenhangend is dan is \(<B>\) een  {\bf diepte-eerst-boom}.
+\paragraph{Terugboog}Elke boog van de graaf G die geen boog is van F, wordt een terugboog genoemd.
+\paragraph{Stapel}Bij dit algoritme kan een stapel worden gebruikt; een top die we voor de eerste keer tegenkomen wordt op de stapel gepusht - dan start het bezoek van de top. Wanneer een top doodlopend blijkt te zijn, wordt hij van de stapel gehaald - het bezoek is ten einde. Wanneer de stapel leeg is, dan is een volledige component van de graaf doorlopen op een diepte-eerst-manier. 
+\paragraph{Complexiteit}Aangezien elke boog hoogstens tweemaal door het algoritme wordt beschouwd, is de complexiteit voor een graaf G met n toppen en m bogen gegeven door \(\Theta(n + m)\), bij een adjacentielijstvoorstelling. Bij het gebruik van een adjacentiematrixvoorstelling, echter, zal de complexiteit \(\Theta(n^2)\) zijn.
+
+\section{Beslissingsbomen}
+\paragraph{Beslissingsbomen}Deze kunnen gebruikt worden voor het voorstellen van een algoritme dat bestaat uit een reeks vergelijkingen tussen elementen.
+
+\subsection{Ondergrens voor de complexiteit van zoeken}
+\paragraph{Algoritme gebaseerd op vergelijkingen}De enige manier waarop het algoritme informatie verkrijgt over waar de in de rij gezochte sleutel kan optreden, bestaat uit het vergelijken van de sleutel met elementen uit de rij.
+\paragraph{Stelling 9.4.1}{\it Zij C(n) het aantal vergelijkingen nodig voor het opzoeken van een sleutel in een rij van lengte n met een zoekalgoritme gebaseerd op vergelijkingen. Dan is \(C(n) = \Omega(logn).\)}
+\paragraph{Bewijs}Een dergelijk zoekalgoritme in een rij kan ook worden beschreven als een reeks van {\bf driewegsvergelijkingen}, waarvan de uitkomst een van de drie mogelijkheden 'gelijk', 'kleiner', 'groter' is. Om een dergelijk algoritme visueel voor te stellen kan een {\bf driewegsbeslissingsboom} worden gebruikt. Dit is een ternaire boom waarbij elke interne top een driewegsvergelijking tussen de sleutel en een element in de rij voorstelt. Afhankelijk van de uitkomst van een bepaalde driewegsvergelijking, voert het algoritme een volgende vergelijking uit of neemt het een besluit; deze mogelijke volgende stappen vormen de kinderen in de boom van de corresponderende top. De bladeren in de boom geven aan welk element uit de rij gevonden werd, of bevatten informatie over de elementen waartussen de gezochte sleutel zich bevindt, in geval van een niet-geslaagde zoekbewerking.\\ \\
+In een voorstelling van het algoritme met een beslissingsboom komt dit slechtste geval overeen met de lengte van een langst mogelijke pad van de wortel naar een blad, m.a.w. met de hoogte van de boom. Beschouwen we nu de situatie waarin een rij a van n verschillende elementen en een sleutel x als input aan het algoritme gegeven wordt. In de beslissingsboom corresponderend met het algoritme moeten er minstens n bladeren zijn, want elk element uit de rij zou kunnen gelijk zijn aan de gezochte sleutel. een ternaire boom met minstens n bladeren heeft echter minstens hoogte \(log_n\) (zie stelling 9.1.9). Dit betekent dat een zoekalgoritme dus minstens \(log_3n\) vergelijkingen doet.
+\paragraph{Stelling 9.4.2}{\it De slechtst mogelijke uitvoeringstijd van een zoekalgoritme gebaseerd op vergelijkingen is \(\Omega(logn)\)}.
+\paragraph{Bewijs}De slechtst mogelijke uitvoeringstijd voor een zoekalgoritme is minstens zo groot als het aantal vergelijkingen dat in het slechtste geval uitgevoerd wordt, want het algoritme doet naast de vergelijkingen ook nog ander werk (zoals variabelen aanpassen). Wegens voorgaande stelling doet een zoekalgoritme dat gebaseerd is op vergelijkingen voor een rij van n elementen, minstens \(log_3n\) vergelijkingen. De slechtst mogelijke uitvoeringstijd is dus \(\Omega(logn)\).
+
+\subsection{Ondergrens voor de complexiteit van sorteren}
+\paragraph{Stelling 9.4.3}{\it Zij C(n) het aantal vergelijkingen nodig om n elementen te sorteren met een sorteeralgoritme gebaseerd op vergelijkingen. Dan is C(n) = \(\Omega(nlogn).\)}
+\paragraph{Bewijs}Een binaire beslissingsboom wordt als volgt gebruikt om een sorteeralgoritme voor te stellen. Elke interne top van de boom wordt als volgt gebruikt om een sorteeralgoritme voor te stellen. Elke interne top van de boom stelt een vergelijking voor van de vorm \(a_i \leq a_j\) tussen twee elementne uit de rij. Wanneer de vergelijking waar is, volgt het algoritme de linkertak, anders volgt het de rechtertak. Op de boog wordt de toestand van de te sorteren rij na de vergelijking (en eventuele verwisseling) getoond. Dit proces wordt herhaald totdat de ganse rij gesorteerd is, m.a.w. wanneer een interne top bereikt wordt, wordt een andere vergelijking uitgevoerd en vervolgens volgt het algoritme diens linker of rechtertak. Wanneer een blad in de boom bereikt wordt, is de rij gesorteerd.\\ \\
+In een voorstelling van het algoritme voor n elementen met een beslissingsboom T komt het slechtste geval overeen met de lengte van een zo lang mogelijk pad van de wortel naar een blad. M.a.w. \(C(n) = h\), met h de hoogte van T.\\ \\
+Aangezien n verschillende elementen op n! manieren kunnen worden gerangschikt, moet T minstens n! bladeren hebben. Wegens Stelling 9.1.8 heeft een binaire boom met m bladeren minstens hoogte \(log_2m\), dus
+\begin{center}
+\(h \geq log_2(n!)\).
+\end{center}
+Wegens Stelling 2.2.8 is
+\begin{center}
+\(log_2(n!) = \Omega(nlogn)\),
+\end{center}
+en dus krijgen we dat
+\begin{center}
+\(C(n) = h \geq log_2(n!) = \Omega(nlogn)\).
+\end{center}
+Hieruit volgt dat
+\begin{center}
+\(C(n) = \Omega(nlogn)\),
+\end{center}
+Hetgeen het gestelde bewijst.
+\paragraph{Stelling 9.4.4}{\it De slechtst mogelijke uitvoeringstijd van een sorteeralgoritme gebaseerd op vergelijkingen is \(\Omega(nlogn)\)}
 
 
 
-\paragraph{}
+
+
+
+
+
+
+
+
+
+
+
+
 \end{document}
