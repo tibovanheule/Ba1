@@ -645,18 +645,174 @@ Hieruit volgt dat
 Hetgeen het gestelde bewijst.
 \paragraph{Stelling 9.4.4}{\it De slechtst mogelijke uitvoeringstijd van een sorteeralgoritme gebaseerd op vergelijkingen is \(\Omega(nlogn)\)}
 
+\chapter{Gretige algoritmen}
 
+\section{Inleiding}
+\paragraph{Gretige algoritmen}Vaak gebruikt voor optimalisatieproblemen, m.a.w. problemen die vragen naar de "beste" oplossing uit alle mogelijke oplossingen.
+Deze algoritmen werken in fasen, in elke fase wordt een keuze gemaakt die op dat moment goed lijkt te zijn, zonder aandacht voor toekomstige beslissingen. Dit is een {\bf lokaal optimale }waarde. \\ Als het algoritme eindigt hopen we dat de lokale optimale waarde ook de {\bf globaal optimale} waarde zal zijn.
 
+\subsection{Een planningsprobleem}
+\paragraph{Stelling 10.1.1}{\it GreedyPlanning geeft steeds een volgorde waarin de eindtijd minimaal is.}
+\paragraph{Bewijs}Immers, zij \(j_{i_1},j_{i_2},...,j_{i_n}\) de volgorde van de taken in het schema. De eerste taak eindigt op tijdstip \(t_{i_1}\). De tweede taak eindigt op tijdstip \(t_{i_1} + t_{i_2}\), de derde op tijdstip... enzovoort. Hieruit kunnen we afleiden dat de totale kost C, d.i. de som van de eindtijden van de taken, van het schema gegeven is door
+\begin{center}
+\(C = \Sigma_{k = 1}^n(n-k + 1)t_{i_k} = (n + 1) \Sigma_{k = 1}^nt_{i_k} -  \Sigma_{k = 1}^nkt_{i_k} \).
+\end{center}
+Merk op dat de eerste sommatie hierin onafhankelijk is van de volgorde van de taken in het schema, zodat enkel de tweede sommatie de totale kost be\"invloedt. Veronderstel dat in een gegeven ordening een \(x > y\) bestaat waarvoor \(t_{i_x} < t_{i_y}\). Het is gemakkelijk in te zien dat door een verwisseling van \(j_{i_x}\) en \(j_{i_y}\) de tweede sommatie vergroot, hetgeen betekent dat de totale kost C vermindert. \\ \\
+Dus, elke volgorde van de taken waarin de uitvoeringstijden niet monotoon niet-dalend is, kan geen optimale oplossing zijn. De enige mogelijke schema's zijn dus diegene waarbij de taken gerangschikt zijn volgens toenemende uitvoeringstijden, waarbij taken met dezelfde uitvoeringstijd in willekeurige volgorde mogen worden uitgevoerd.
 
+\subsection{Het wisselgeldprobleem}
+\paragraph{Stelling 10.1.2}{\it Voor een muntsysteem met muntstukken van 1, 5 en 10 cent geeft GreedyChange elk bedrag terug met een minimaal aantal munten.}
+\paragraph{Bewijs}
+We bewijzen door inductie dat de optimale oplossing voor een willekeurig bedrag x gelijk is aan de oplossing bekomen door GreedyChange. Voor de gevallen \(x = 1,2,3,4,5,10\) is eenvoudig te controleren dat dit algoritme het bedrag met een minimaal aantal munten teruggeeft. In de inductiehypothese veronderstellen we dat elk bedrag \(y < x\) door GreedyChange optimaal teruggegeven wordt. \\ \\
+We beschouwen eerst het geval waarbij \(5 < x < 10\). Zij A een optimale oplossing. Dan moet A een muntstuk van 5 cent bevatten, want anders kan A enkel muntstukken van 1 cent bevatten, en 5 daarvan kunnen worden vervangen door een muntstuk van 5 cent, hetgeen het aantal muntstukken verminder, zodat de oplossing dus niet optimaal zou zijn; Bovendien is \(A \backslash \{5\}\) optimaal voor \(x - 5\); immers, onderstel dat A' een betere oplossing is voor \(x - 5\), dan zou \(A' \cup \{5\}\) een oplossing voor x met minder muntstukken dan A zijn, en zou A dus geen optimale oplossing voor x zijn. Wegens de inductiehypothese wordt het bedrag \(x - 5\) op dezelfde manier teruggegeven door GreedyChange en door de optimale strategie. GreedyChange voegt aan deze oplossing een muntstuk van 5 cent toe en dit is ook de optimale oplossing.\\ \\
+Vervolgens beschouwen we het geval waarbij \(x > 10\). Zij A een optimale oplossing. Volgens een gelijkaardig argument als hierboven moet A een muntstuk van 10 cent bevatten. Bovendien is \(A \backslash \{10\}\) een optimale oplossing voor \(x - 10\). Wegens inductiehypothese geeft GreedyChange de optimale oplossing voor \(x - 10\). GreedyChange voegt aan deze oplossing een muntstuk van 10 cent toe en dit is ook de optimale oplossing.
+\paragraph{Stelling 10.1.3}{\it Voor een muntsysteem met muntstukken 1,7 en 10 cent geeft GreedyChange niet elk bedrag terug met een minimaal aantal munten.}
+\paragraph{Bewijs}We bewijzen dit door een tegenvoorbeeld te geven. Beschouw een bedrag van 35 cent. GreedyChange geeft dit terug als 3 stukken van 10 cent en 5 stukken van 1 cent, dus in totaal 8 munten. Maar het bedrag 35 kan ook worden teruggegeven met 5 stukken van 7 cent, dus in totaal minder munten.
 
+\section{Miniale-kost opspannende bomen (MST)}
+\paragraph{}Zoeken naar een best mogelijke manier om een samenhangende opspannende deelgraaf H van een gegeven graaf G te vinden met een zo klein mogelijk gewicht.
 
+\subsection{Het MST-algoritme van Kruskal}
+\paragraph{Het algoritme}G is een samenhangende gewogen graaf. Het algoritme selecteer \'e\'en na \'e\'en bogen uit G, zonder daarbij cykels te vormen, totdat een opspannende boom geproduceerd wordt. Het algoritme is gretig omdat het herhaaldelijk een boog met {\bf minimaal gewicht} selecteert uit de overblijvende bogen (op voorwaarde dat geen cykel gemaakt wordt). Doorgaans geldt: \(w(e_1) \leq w(e_2) \leq ... \leq w(e_m)\).
+\paragraph{Stelling 10.2.1}{\it MSTKruskal levert een minimale-kost opspannende boom voor een samenhangende gewogen graaf.}
+\paragraph{Bewijs}Zij G de graaf met n toppen. zij T de deelgraaf die door MSTKruskal bekomen werd. Het is onmiddelijk duidelijk dat T een opspannende boom van G is. Onderstel dat de bogen \(E(T) = \{e_1, e_2,...,e_{n-1}\}\) zo gelabeld zijn dat  \(w(e_1) \leq ... \leq w(e_{n-1})\). Dan is het gewicht van T gegeven door \(w(T) = \Sigma_{i = 1}^{n - 1}w(e_i)\).\\
+Het bewijs gebeurt uit het ongerijmde. We veronderstellen dus dat T geen minimale-kost opspannende boom is. Uit de opspannende bomen met minimale kost van G selecteren we er \'e\'en die een maximaal aantal bogen met T gemeen heeft; we noemen deze boom H. Wegens de veronderstelling zijn de bomen H en T niet identiek, zodat T minstens \'e\'en boog heeft die niet tot H behoort. Zij \(e_i (1 \leq i \leq n - 1)\) de eerste boog van T die niet tot H behoort, en definieer \(G_0 = H + e_i\). Dan heeft \(G_0\) precies \'e\'en cykel C. Aangezien T geen cykels heeft, is er een boog \(e_0\) van C die niet tot T behoort. De graaf \(T_0 = G_0 - e_0\) is ook een opspannende boom van G, en er geldt dat \(w(T_0) = w(H) + w(e_i) - w(e_0)\). Aangezien \(w(H) \leq w(T_0)\), volgt hieruit dat \(w(e_0) \leq w(e_i)\). Door MSTKruskal is \(e_i\) een boog met minimaal gewicht zodanig dat \(<\{e_1, e_2,...,e_{i-1}\} \cup \{e_i\}>\) acyclisch is. Echter, \(<\{e_1, e_2,...,e_{i-1},e_0\}>\) is een deelgraaf van H en is dus acyclisch, zodat \(w(e_i) = w(e_0)\). Dus \(w(T_0) = w(H)\) , hetgeen impliceert dat \(T_0\) ook een minimale-kost opspannende boom van G is. Maar \(T_0\) heeft meer bogen gemeenschappelijk met T dan H, wat in tegenstrijd is met de eerdere veronderstelling.
 
+\subsubsection{Implementatie en complexiteit}
+\paragraph{}Zij \(V = \{v_1, v_2,...,v_n\}\). Sorteren van de bogen kan met \(\Theta(mlogn)\) sorteeralgoritme. De volgende boog met minimaal gewicht kan in \(\Theta(1)\) tijd worden geselecteerd. Het controleren of \(<S \cup \{e\}>\) acyclisch is, is niet eenvoudig. Om dit effici\"ent te laten verlopen:
+\paragraph{Testen op cykels}We gebruiken een array comp van lengte n, waarbij initieel \(comp(v_i) = i\), voor elke \(i = 1,...,n\). Het selecteren van de volgende boog e en toevoegen aan S met \(e = v_{j{_1}}v_{k_1}\). Volgende toekenningen gebeuren:
+\begin{center}
+\(comp(v_{j_1}), comp(v_{k_1}) \leftarrow min(j_1, k_1)\).
+\end{center}
+In het algemene geval veronderstellen we dat de bogen \(e_1,...,e_{i - 1}\) reeds beschouwd werden als mogelijke elementen van S en dat \(|S| < n-1\). Vervolgens beschouwen we de boog \(e_i = v_{j_i}v_{k_i}\). Als \(comp(v_{j_i}) = comp(v_{k_i})\), dan gaan we verder met de volgende boog, nl. \(e_{i + 1}\). Anders stellen we \(S = S \cup \{e_i\}\) en doen we de volgende toekenningen:
+\begin{center}
+\(m_i \leftarrow min(comp(v_{j_i}), comp(v_{k_i})\) \(M_i \leftarrow max(comp(v_{j_i}), comp(v_{k_i}))\).
+\end{center}
+Voor elke top \(v_s\) waarvoor \(comp(v_s) = M_i\), stellen we nu \(comp(v_s) \leftarrow m_i\). Aangezien \(comp(v_j)\) en \(comp(v_k)\) hoogstens \'e\'enmaal worden vergeleken voor elke boog \(v_jv_k\) van G, zijn er in het algoritme hoogstens m dergelijke vergelijkingen nodig. Bovendien wordt \(comp(v_j)\) voor elke top \(v_j\) hoogstens \(n - 1\) keren aangepast, nl. na elke toevoeging van een boog aan S. Deze aanpassingen vereisen \(O(n^2)\) stappen, zodat de totale complexiteit van de while-lus \(O(n^2)\) is.
+\\ De totale complexiteit is \(O(mlogn + n^2)\)
 
+\subsection{Het MST-algoritme van Prim}
+\paragraph{Gretig algoritme en correctheid van de gretige strategie}Het bouwt een MST door in een reeks stappen deelbomen uit te breiden. Het start van een boom T bestaan de uit \'e\'en top, willekeurig gekozen uit de toppen van G.Vervolgens wordt deze in elke stap uitgebreid door er een boog aan toe te voegen. Op gretige wijze gekozen: een boog van minimaal gewicht die een top in T verbindt met een top die niet tot T behoort. Het stopt als alle toppen van G tot T behoren.
+\paragraph{Stelling 10.2.2}{\it MSTPrim levert een minimale-kost opspannende boom voor een samenhangende gewogen graaf.}
+\paragraph{Bewijs}Zij G de graaf met n toppen en zij T de boom die geleverd wordt door MSTPrim. Het is gemakkelijk in te zien dat T een opspannende boom van G is. Veronderstel echter dat T geen minimale-kost opspannende boom van G is en zij H een minimale-kost opspannende boom van G die een maximaal aantal bogen gemeenschappelijk heeft met T. Zij \(E_T = \{e_1,e_2,...,e_{n-1}\}\), waarbij \(e_j\) de boog is die in stap j door MSTPrim aan T toegevoegd werd, voor \(j = 1,...,n-1\). Dus \(w(T) = \Sigma_{j=1}^{n-1}w(e_j)\). Zij \(e_i\) de eerste boog van T die niet tot H behoort. Voor \(i = 1\), zij \(U = \{x_0\}\). Voor \(i \geq 2\), zij U de toppenverzameling van de deelgraaf ge\"induceerd door de bogen \(e_1,e_2,...e_{i-1}\), m.a.w. \(U = V(<\{e_1,e_2,...e_{i-1}\}>)\). De graaf \(H + e_i\) bevat een unieke cykel C. Uiteraard verbindt \(e_i\) een top van U en een top van \(V_T - U\). Echter, C bevat ook een andere boog \(e_0\) die U en \(V_T - U\) verbindt. Dan is \(T" = H + e_i - e_0\) een opspannende boom. Aangezien T bekomen werd met MSTPrim, is \(w(e_i) \leq w(e_0)\), zodat \(w(T') \leq w(H)\). Aangezien H een minimale-kost opspannende boom is, is ook T' een minimale-kost opspannende boom. Maar \(T'\) heeft meer bogen gemeenschappelijk met T dan H, hetgeen in strijd is met de eerdere veronderstelling.
+\paragraph{Implementatie en complexiteit}Voor een goede implementatie blijkt het nuttig: voor elke top \(y \in V \backslash V_T\) de goedkoopste boog bij te houden die y verbindt met een top \(x \in V_T\). We noemen deze collectie bogen B. Het selecteren van het volgende element is dan eenvoudigweg het selecteren van het kleinste element uit B. Hiervoor ligt een prioriteitswachtlijn voor de hand. Wanneer een nieuwe boog \(e' = x'y'\) geselecteerd is, moet naar het toevoegen van e' aan T ook een aantal aanpassingen aan de collectie B gebeuren. Voor de buren \(y' \in V \backslash V_T\), bestaat nu eventueel een goedkopere verbinding met T, en dit moet worden aangepast in B. Wanneer we voor een top y een nieuwe verbinding met de boom in opbouw hebben gevonden, voegen we de informatie over de betreffende boog toe aan de prioriteitswachtlijn B. Bij het verwijderen van het kleinste element uit B moeten we dan wel nog controleren of de betreffende top nog niet tot de boom in opbouw behoort, en zoja, doen we iets meer met deze top.
+\paragraph{}Elke top wordt hoogstens tweemaal aan de prioriteitswachtlijn toegevoegd en de bewerkingen op de wachtlijn zijn logaritmisch, dus complexiteit is \(O(mlogn)\).
 
+\section{Bepalen van kortste paden}
 
+\subsection{Afstand en aanverwante begrippen}
+\paragraph{Afstand}De afstand \(d(s,t)\)van een top s naar een top t in G is de lengte van het kortste s-t-pad in G. (d.i. het aantal bogen op dit pad), of \(\infty\) als er geen pad is. {\bf gerichte afstand} bij gerichte grafen.
+\paragraph{Gewicht v/e pad}Het gewicht van een pad tussen twee toppen u en v is de som van de gewichten van de bogen op het u-v-pad. De {\bf gewogen afstand} \(d(u,v)\) tussen toppen u en v van G is het gewicht van een u-v-pad met minimaal gewicht in G, indien bestaande, anders is \(d = \infty\). Een dergelijk pad is een {\bf kortste gewogen pad} tussen u en v.
+\paragraph{}De afstandsfunctie op een graaf G voldoet aan de driehoeksongelijkheid.
+\paragraph{Excentriciteit}De e(v) van een top v in een (evt. gewogen) graaf G is de afstand van v naar een top die het verst van v verwijderd is, m.a.w. \(e(v) = max\{d(u,v)|u\in V(G)\}\).
+\paragraph{Straal}De straal van een samenhangende graaf G is gedefinieerd als \(rad(G) = min\{e(v)|v\in V(G)\}\).
+\paragraph{Diameter}Is gedefinieerd als \(diam(G) = max\{e(v) | v \in V(G)\} = max\{d(u,v) | u,v \in V(G)\}\)
+\paragraph{Stelling 10.3.1}{\it Zij G een graaf. Dan geldt dat \(rad(G) \leq diam(G) \leq 2rad(G)\)}.
+\paragraph{Bewijs}De eerste ongelijkheid volgt rechtstreeks uit de definitie. Om de tweede ongelijkheid te bewijzen, beschouwen we twee toppen \(u,v \in V(G)\) waarvoor \(d(u,v) = diam(G)\). Zij w een top van G waarvoor \(e(w) = rad(G)\). Wegens de driehoeksongelijkheid geldt dat \(diam(G) = d(u,v) \leq d(u,w) + d(w,v) \leq 2rad(G)\).
+\paragraph{Centrum}Het {\bf centrum} \(C(G)\) van een samenhangende (evt. gewogen) graaf G is de deelgraaf die ge\"induceerd wordt door de toppen van G waarvan de excentriciteit gelijk is aan de straal  van G, m.a.w. \(C(G) = <\{v \in V(G) | e(v) = rad(G)\}>\).
+\paragraph{Afstand}De afstand \(d(v)\) van een top v in een graaf G is de som van de afstanden van v tot elke top an G, m.a.w. \(d(v) = \Sigma_{u \neq v\in V(G)}d(u,v)\).
+\paragraph{Mediaan}Is M(G) van een graaf G is de deelgraaf ge\"induceerd door de verzameling van toppen van G met minimale afstand. 
 
+\subsection{Toepassingen}
+\paragraph{Routebepaling}Keuze van kortste weg tussen 2 punten.
+\paragraph{Stadsplanning}Stad is uitgebreid, keuze van beste locatie voor brandweerkazerne, politiebureau en hospitaal? Het begrip {\bf centrum kan hierbij helpen}. Voor snenlste wegen is de {\bf mediaan }beter.
 
+\subsection{Kortste-pad-problemen}
+\paragraph{algoritme van Moore}Bepalen van kortste ongewogen afstand van een zekere top naar alle andere toppen in de graaf. Dit is gebaseerd op het {\bf breedtre-eerst doorlopen van de graaf}.
+\paragraph{Gewogen afstand tussen twee toppen}Breedte-eerst-zoekproces is hiervoor niet voldoende. Hiervoor ontwikkelde Dijkstra een effici\"ent algoritme. Enkel voor grafen met een niet-negatief booggewicht. Het is een {\bf gretig algoritme}.
+\paragraph{Floyd}Kortste gewogen paden tussen alle toppenparen in een gewogen graaf. Dit gebruikt {\bf dynamisch programmeren}
 
+\subsection{Het kortste-pad-algoritme van Dijkstra}
+\paragraph{Gretig algoritme en correctheid van de gretige strategie}Dit algoritme geeft in een aantal opeenvolgende stappen labels aan de toppen van G. Na afloop van het algoritme zal een top \(v (v \neq u_0\) een label \(l(v)\) gekregen hebben, waarbij \(l(v) = d(u_0,v)\). Initieel heeft \(u_0\) het label \(l(u_0) = 0\) en zijn alle andere toppen met \(\infty \) gelabeld. Voor een top \(v \neq u_0\) zal het label \(l(v)\) worden aangepast van \(\infty\) tot \(d(u_0,v)\). In elk stadium: voor iedere top v de voorganger \(p(v)\) van v op een voorlopig kortste \(u_0-v\)-pad bijgehouden. Iedere keer \(l(v)\) aangepast wordt is er een korter \(u_0-v\)-pad gevonden; op dat moment wordt ook \(p(v)\) aangepast om de top aan te duiden die nu aan v voorafgaat op dit kortere \(u_0-v\)-pad.\\ \\
+Zij \(u_0\) een top in een gewogen graaf \(G = (V,E)\) en veronderstel dat S een echte deelverzameling van V is waarvoor \(u_0 \in S\). Zij \(S* = V - S\) en definieer de afstand \(d(u_0,S*)\) van \(u_0\) naar \(S*\) als
+\begin{center}
+\(d(u_0,S*) = min\{d(u_0,x) | x \in S*\}\).
+\end{center}
+Dan is \(d(u_0,S*) = \infty\) als er geen pad is van \(u_0\) naar een top van \(S*\). Anders bestaat er minstens \'e\'en top \(v \in S*\) waarvoor \(d(u_0,v) = d(u_0,S*) < \infty\). Bovendien, als \(P: u_0,u_1,u_2,...,u_k,v\) een kortste \(u_0-v\)-pad in G is, dan geldt dat \(u_i \in S*\)  voor alle \(i = 1,...,k\) en bovendien is \(u_0,u_1,...,u_k\) een kortste \(u_0-u_k\)-pad. Ook geldt:
+\begin{center}
+\(d(u_0,S*) = min \{d(u_0,u) + w(uv) | u \in S, v \in S*, uv \in E\}\).
+\end{center}
+Ten slotte, als dit minimum bereikt wordt met \(u = x\) en \(v = y\), dan is 
+\begin{center}
+\(d(u_0,y) = d(u_0,x) +w(xy)\),
+\end{center}
+hetgeen een uitdrukking geeft voor de afstand tussen \(u_0\) en \(y\).
+\paragraph{Stelling 10.3.2}{\it Zij \(G = (V,E)\) een gewogen graaf met n toppen. SPDijkstra bepaalt de afstand van een vaste top \(u_0\) van G tot elke andere top van G. M.a.w. na afloop van het algoritme is
+\begin{center}
+\(l(v) = d(u_0,v)\) voor alle \(v \in V\). (10.2)
+\end{center}
+Bovendien, wanneer \(l(v) \neq \infty\) en \(v \neq u_0\), dan is
+\begin{center}
+\(Q : u_0 = t_0,t_1,t_2,...,t_k = v\) (10.3)
+\end{center}
+een kortste \(u_0-v-pad\), waarbij \(t_{i-1} = p(t_i)\), voor \(i = 1,2,...,k\).}
+\paragraph{Bewijs}We bewijzen eerst (10.2). Het volstaat om dit aan te tonen in het geval dat G een samenhangende graaf is. Immers, wanneer G niet samenhangend is, dan zijn de toppen van G die niet door een pad met \(u_0\) verbonden, precies die toppen die als label \(\infty\) hebben bij het be\"eindigen van het algoritme.\\ \\
+Het bewijs gebeurt door inductie op i. We tonen aan dat, nadat \(u_i (0 \leq i \leq n - 1)\) bepaald is, er geldt dat 
+\begin{center}
+\(l(v) = d(u_0,v)\) voor alle \(v \in S_i = \{u_0,u_1,...,u_i\}\). (10.4)
+\end{center}
+Het is onmiddelijk duidelijk dat dit geldig is voor \(i = 0\). Veronderstel vervolgens dat (10.4) geldig is voor een zekere \(i, 0 \leq i \leq n-1\); we tonen aan dat (10.4) ook geldt voor \(i + 1\).\\ \\
+Het volstaat om aan te tonen dat \(l(u_{i+1} = d(u_0,u_{i+1}\). Uit de werking van SPDijkstra weten we dat \(u_{i+1}\) een top is waarvoor \(l(u_{i+1}) = min\{l(v) | v \in S_i*\}\). Dus
+\begin{equation}
+\begin{split}
+l(u_{i+1}) & =min\{l(v) | v \in S_i*\}\\
+ & =  min\{l(u) + w(uv) | u \in S_i, v \in S_i*, uv \in E(G)\}\\
+ & = min\{d(u_0,u) + w(uv) | u \in S_i, v \in S_i*, uv \in E(G)\}
+\end{split}
+\end{equation}
+waarbij de gelijkheid (10.1) volgt uit de inductiehypothese. Het minimum in (10.1) treedt op voor \(v = u_{i+1}\), zodat dus wegens \(d(u_0,y) = d(u_0,x) +w(xy)\) geldt dat \(l(u_{i+1}) = d(u_0,u_{i+1})\). \\ \\
+Om (10.3) te bewijzen gaan we als volgt te werk. Beschouw een top \(v \in V(G)\) waarvoor \(l(v) \neq \infty\), en \(v \neq u_0\). Zij k het aantal bogen op het pad van \(v\) naar \(u_0\) via de voorgangers \(p\), en noem \(t_k = v\). Na afloop van het algoritme is \(l(v) = l(t_{k-1}) + w(t_{k-1}v\), voor een zekere top \(t_{k-1}\) waarvoor \(p(v) = t_{k-1}\) en
+\begin{center}
+\(d(u_0,v) = d(u_0,t_{k-1}) + w(t_{k-1}v)\).
+\end{center}
+Dit feit impliceert dat \(t_{k-1}\) de op een na laatste top is op een kortste \(u_0-v\)-pad. Op deze manier verder werkend construeren we een kortste \(u_0-v\)-pad
+\begin{center}
+\(P: u_0 = t_0,t_1,...,t_{k-1}, t_k = v\)
+\end{center}
+waarbij \(t_{i-1} = p(t_i)\), voor \(i = 1,2,...,k\).
+\paragraph{Implementatie en complexiteit}De complexiteit kan worden herleid tot \(O(mlogn)\).
 
+\section{Het (euclidische) handelsreizigersprobleem}
+\paragraph{}Hierin wordt bijkomend verondersteld dat de gewichtsfunctie op de bogen voldoet aan de driehoeksongelijkheid \(w(v_iv_k) \leq w(v_iv_j) + w(v_jv_k)\).  Verder veronderstellen we: de graaf G gewogen complete graaf. 
+\paragraph{Algoritme}Een benaderend algoritme: maakt eerst een minimale-kost opspannende boom T in G. Vervolgens wordt een diepte-eerst doorlopen van T uitgevoerd. Zij \(v_{i_1}, v_{i_2},...,v_{i_n},v_{i_1}\) terug. 
+\paragraph{Gewicht}Er valt te bewijzen dat het gewicht van de bekomen hamiltoniaanse cykel nooit meer dan tweemaal het gewicht van de minimale hamiltoniaanse cykel is. Een dergelijk resultaat omtrent het inschatten hoe goed of hoe slecht een bekomen benaderende oplossing is in vergelijking met de optimale oplossing, wordt ook de {\bf performantie} van de benadering genoemd.
+\paragraph{Stelling 10.4.1}{\it Voor een gewogen complete graaf G is het gewicht van een hamiltoniaanse cykel van G bekomen door ETSPGreedy minder dan tweemaal het gewicht van een minimale hamiltoniaanse cykel van G.}
+\paragraph{Bewijs}Zij T een minimale-kost opspannende boom van G. Het verwijderen van een boog uit een hamiltoniaanse cykel \(C_{min}\) van een minimaal gewicht in G levert een opspannende boom van G op. Dus \(w(T) \leq w(C_{min})\).\\ \\
+Zij H de euleriaanse multigraaf die bekomen wordt door elke boog van T te verdubbelen. Een euleriaans circuit van H levert dan een gesloten wandeling in G op met gewicht \(w(H) = 2w(T)\). \\ \\
+Veronderstel dat we T diepte-eerst doorlopen, startend vanuit een eindtop van T. Zij \(v_{i_1},v_{i_2},...,v_{i_n}\) de volgorde waarin de toppen van T hierbij worden bezocht. Uit de driehoeksongelijkheid volgt dat het gewicht van de cykel \(C:v_{i_1},v_{i_2},...,v_{i_n},v_{i_1}\) ten hoogste het gewicht van H is. \\ \\
+Dus, \(w(C) \leq 2w(T) \leq 2w(C_{min})\). ETSPGReedy levert dus een hamiltoniaanse cykel waarvan het gewicht hoogstens tweemaal het gewicht van een minimale hamiltoniaanse cykel is.
 
+\section{Genoomherschikkingen}
+
+\subsection{Situering}
+
+\subsection{Sorteren door omkeringen}
+\paragraph{Omkering}Een omkering \(p(i,j)\) keert de volgorde van elementen \(p_i,...p_j\).
+\paragraph{Omkeringsafstand}Om een permutatie \(\pi\) naar een permutatie \(\sigma\) om te zetten m.b.v. omkeringe, de optimale reeks wordt de omkeringsafstand \(d(\pi,\sigma)\) genoemd.
+\paragraph{Sorteren door omkeringen}Zoeken de omkeringen om een permutatie \(\pi\) om te zetten naar de permutatie \(\sigma = 1 2 ... n\). Zodat het aantal omkeringen zo klein mogelijk is. De omkeringsafstand is het aantal omkeringen in een optimale reeks.
+
+\subsection{Een eenvoudig gretig algoritme}
+\paragraph{Algoritme}Het steunt op volgende observatie: Een permutatie heeft al een reeds gesorteerde prefix, en het heeft weinig zin om deze te wijzigen. We kunnen dan stap voor stap de reeds correcte prefix uitbreiden.
+\paragraph{Performantie}De {\bf benaderingsverhouding} van een algoritme A op input I voor een probleem P is de verhouding \(A(I) / OPT(I)\), met A(I) de oplossing bekomen door algoritme A en OPT(I) optimale (correcte) oplossing. De benaderingsverhouding van het algoritme voor een probleem P van grootte n wordt gedefinieerd als maximum van benaderingsverhouding voor A over alle inputs van grootte n, m.a.w. als \(max_{|I| = n}(1(I)/OPT(I))\). Het geeft dus een schatting van de performantie van de benadering in een slechtste-geval scenario.
+
+\subsection{Sorteren door omkeringen via breekpunten}
+\paragraph{Breekpunten}Zijn een manier om de zic htbare structuur in een permutatie te formalisern, bv. \(\pi = 21345876\) splitsen we op in \(|21|345|876|\).
+\paragraph{Uitbreiding}Zij \(\pi ' = \pi _0 \pi _1 ... \pi _n \pi _{n+1} \) de uitbreiding van een permutatie \(\pi =  \pi _1 ... \pi _n \). \( \pi _0 \ en \ \pi _{n+1} \) worden niet van plaats verswisseld tijdens het algoritme.
+\paragraph{Adjacentie}Als een paar \(\pi _i \) en \(\pi _{i+1} \)  waarvoor \(|\pi _{i+1} - \pi _{i}| = 1 \).
+\paragraph{Breekpunt} Is een paar \(\pi _i \) en \(\pi _{i+1} \)  waarvoor \(|\pi _{i+1} - \pi _{i}| \neq 1 \).
+\paragraph{Strook}Interval tussen twee opeenvolgende breekpunten, m.a.w. een maximaal segment zonder breekpunten. Stroken kunnen {\bf stijgend} of {\bf dalend} zijn. De strook van \'e\'en element is dalend, maar 0 en n + 1 zijn stijgend.
+\paragraph{Eigenschap 10.5.1}{\it Zij \(\pi\) een permutatie van lengte n en zij \(b(\pi)\) het aantal breekpunten in \(\pi '\). Dan geldt dat \(0 \leq b(\pi) \leq n + 1\)}.
+\paragraph{Algoritme}Bij het algoritme worden dus voorturend breekpunten ge\"elimineerd.
+\paragraph{Eigenschap 10.5.2}{\it Zij \(\pi\) een permutatie van lengte n. Als \(\pi\) een dalende strook bevat, dan bestaat er een omkering p zodanig dat \(b(\pi . p) < b(\pi).\)}
+\paragraph{Bewijs}Uit alle dalende stroken, kies die met kleinste element k. Dan kan \(k - 1\) niet tot een dalende strook behoren, want anders zou de strook met \(k - 1\) gekozen zijn. Dit betekent dat \(k - 1\) tot een stijgende strook behoort en deze stijgende strook zelfs be\"indigt. Dus, \(k\) en \(k - 1\) corresponderen met 2 breekpunten, nl. een breekpunt van de dalende strook eindigend op k en een breekpunt van de stijgende strook eindigend op \(k - 1\). Het omkeren van het segment tussen \(k\) en \(k - 1\) brengt ze samen, waardoor het aantal breekpunten vermindert.
+\paragraph{}Als \(\pi\) een dalende strook bevat: geen probleem, anders een stijgende strook (behalve \(0\) en \(n + 1\)) omkeren en dan hebben we een dalende strook.
+\paragraph{Eigenschap 10.5.3}{\it Zij \(\pi\) permutatie van lengte n en zij \(b(\pi)\) het aantal breekpunten in \(\pi '\). Het aantal omkeringen dat BreakpointRSort gebruikt is \(\leq 2b(\pi)\).}
+\paragraph{Eigenschap 10.5.4}{\it Zij \(\pi\) een permutatie van lengte n en zij \(b(\pi)\) het aantal breekpunten in \(\pi '\). Dan geldt dat de omkeringsafstand \(d(\pi) \geq b(\pi) /2\).}
+\paragraph{Stelling 10.5.5}{\it De benaderingsverhouding van BreakpointRSort is \(\leq 4\)}.
+\paragraph{Bewijs}Zij \(\pi \) een permutatie van lengte n. Dan is \(OPT(\pi) = d(\pi)\) en \(A(\pi) =\) het aantal omkeringen door het algoritme.\\ \\
+Wegens eigenschap 10.5.4 is \(d(\pi) \geq b(\pi)/2\) en wegens Eigenschap 10.5.3 is het aantal omkeringen door het algoritme \(\leq 2b(\pi)\).\\ \\
+De benaderingsverhouding van het algoritme is dus 
+\begin{center}
+\(\frac{A(\pi)}{OPT(\pi)} \leq \frac{2b(\pi)}{\frac{b(\pi)}{2}} = 4\).
+\end{center}
 \end{document}
